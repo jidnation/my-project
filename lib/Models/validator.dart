@@ -13,12 +13,15 @@ class ValidateInput extends StatelessWidget {
     return Container();
   }
 
-  String? inputChecker(value, type) {
-    if (value != null || value.isNotEmpty) {
+  static var result;
+
+  String? inputChecker(String? value, TextInputType? type) {
+    if (value != null || value!.isNotEmpty) {
       if (type == TextInputType.text) {
-        if (value == null || value.isEmpty) {
+        if (value.isEmpty) {
           return 'Invalid input';
         }
+      result = value;
         return null;
       } else if (type == TextInputType.number) {
         if (value.length >= 3) {
@@ -45,5 +48,9 @@ class ValidateInput extends StatelessWidget {
       } else if (type == TextInputType.datetime) {}
       // return null;
     }
+  }
+
+    static getter() {
+    return result;
   }
 }

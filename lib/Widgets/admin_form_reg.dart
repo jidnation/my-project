@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_project/Widgets/form_gen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-// import 'package:flutter/services.dart';
-
 class AdminFormReg extends StatefulWidget {
   const AdminFormReg({Key? key}) : super(key: key);
 

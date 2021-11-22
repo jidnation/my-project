@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/Models/validator.dart';
 import 'package:my_project/Routes/contacts.dart';
 import 'package:my_project/Widgets/form_gen.dart';
 
@@ -10,6 +11,7 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  late String  _name = '';
   final _signInKey = GlobalKey<FormState>();
 
   @override
@@ -82,14 +84,17 @@ class _SignInPageState extends State<SignInPage> {
                           decoration: BoxDecoration(
                             color: const Color(0xff3c096c),
                             borderRadius: BorderRadius.circular(5),
-                            border:
-                                Border.all(width: 0.4, color: const Color(0xff9d4edd)),
+                            border: Border.all(
+                                width: 0.4, color: const Color(0xff9d4edd)),
                           ),
                           child: TextButton.icon(
                             onPressed: () {
                               if (_signInKey.currentState!.validate()) {
+                                _name = ValidateInput.getter();
                                 Navigator.pushNamed(
-                                  context, adminPage,
+                                  context,
+                                  adminPage,
+                                  arguments: _name,
                                 );
                               }
                             },
@@ -123,7 +128,8 @@ class _SignInPageState extends State<SignInPage> {
                           child: TextButton(
                             onPressed: () {
                               Navigator.pushNamed(
-                                context, signUpPage,
+                                context,
+                                signUpPage,
                               );
                             },
                             child: Text(

@@ -24,14 +24,15 @@ class Routing {
           return MaterialPageRoute(builder: (_) => const SignUpPage());
         }
 
-        case reportingPage:
+      case reportingPage:
         {
           return MaterialPageRoute(builder: (_) => const ReportingPage());
         }
 
-case adminPage:
+      case adminPage:
         {
-          return MaterialPageRoute(builder: (_) => const AdminPage());
+          String _adminName = settings.arguments as String;
+          return MaterialPageRoute(builder: (_) => AdminPage(userName: _adminName));
         }
       default:
         return MaterialPageRoute(

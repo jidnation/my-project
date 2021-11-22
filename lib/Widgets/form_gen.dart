@@ -21,12 +21,20 @@ class SectionHeading extends StatelessWidget {
   }
 }
 
+mixin Settings {
+  static dynamic textField() {}
+}
+
 class RegForm extends StatelessWidget {
   final String labelValue;
   final TextInputType keyboardName;
+  final String? value;
 
   const RegForm(
-      {Key? key, required this.labelValue, required this.keyboardName})
+      {Key? key,
+      required this.labelValue,
+      required this.keyboardName,
+      this.value})
       : super(key: key);
 
   @override
@@ -45,30 +53,30 @@ class RegForm extends StatelessWidget {
         cursorHeight: 18,
         cursorColor: const Color(0xff10002b),
         decoration: InputDecoration(
-          labelText: labelValue,
-          labelStyle: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontFamily: 'Poppins',
-            color: Color(0xff10002b),
-            letterSpacing: 1,
-            fontSize: 12,
-          ),
-          floatingLabelStyle: const TextStyle(
-            fontFamily: 'Lobster',
-            letterSpacing: 1.3,
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
-            color: Colors.black,
-          ),
-          border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.shade400)),
-          contentPadding: const EdgeInsets.only(top: 10, left: 10, bottom: 10),
-          isDense: true,
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-            color: Colors.grey.shade500,
-          ))
-        ),
+            labelText: labelValue,
+            labelStyle: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Poppins',
+              color: Color(0xff10002b),
+              letterSpacing: 1,
+              fontSize: 12,
+            ),
+            floatingLabelStyle: const TextStyle(
+              fontFamily: 'Lobster',
+              letterSpacing: 1.3,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              color: Colors.black,
+            ),
+            border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey.shade400)),
+            contentPadding:
+                const EdgeInsets.only(top: 10, left: 10, bottom: 10),
+            isDense: true,
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+              color: Colors.grey.shade500,
+            ))),
         validator: (String? value) {
           // return ValidateInput.dataValue(value, keyboardName);
           return const ValidateInput().inputChecker(value, keyboardName);
@@ -76,6 +84,7 @@ class RegForm extends StatelessWidget {
       ),
     );
   }
+
 }
 
 class RadioButton extends StatefulWidget {
