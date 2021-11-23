@@ -29,12 +29,14 @@ class RegForm extends StatelessWidget {
   final String labelValue;
   final TextInputType keyboardName;
   final String? value;
+  final int? lineNumber;
 
   const RegForm(
       {Key? key,
       required this.labelValue,
       required this.keyboardName,
-      this.value})
+      this.value,
+      this.lineNumber})
       : super(key: key);
 
   @override
@@ -43,6 +45,7 @@ class RegForm extends StatelessWidget {
       margin: const EdgeInsets.only(top: 10),
       // padding: const EdgeInsets.only(left: 8, top: 0, bottom: 2),
       child: TextFormField(
+        maxLines: (lineNumber != null) ? lineNumber : null,
         maxLength: (keyboardName == TextInputType.number) ? 11 : null,
         style: const TextStyle(color: Color(0xff10002b)),
         keyboardType: keyboardName,
@@ -84,7 +87,6 @@ class RegForm extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class RadioButton extends StatefulWidget {
@@ -135,5 +137,45 @@ class _RadioButtonState extends State<RadioButton> {
             color: Colors.grey.shade700,
           )),
     ]);
+  }
+}
+
+class Button extends StatelessWidget {
+  final String text;
+  final double length;
+  final Color? color;
+  const Button({
+    Key? key,
+    required this.text,
+    required this.length, this.color,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: const EdgeInsets.symmetric(vertical: 20),
+        height: 50,
+        width: length,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: (color != null ) ? color! : const Color(0xff3c096c)),
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'Caveat',
+              letterSpacing: 1,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              shadows: [
+                Shadow(
+                  color: Colors.grey.shade500,
+                  offset: const Offset(1, 1),
+                )
+              ],
+            ),
+          ),
+        ));
   }
 }

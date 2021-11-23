@@ -34,7 +34,7 @@ class _AdminPageState extends State<AdminPage> {
                       children: const [
                         ContainerBuilder(
                           icon: FontAwesomeIcons.clipboard,
-                          label: 'Report',
+                          label: 'Case-Report',
                           colorName: Colors.red,
                         ),
                         IconContainerBuilder(

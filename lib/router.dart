@@ -5,6 +5,7 @@ import 'package:my_project/Routes/home_page.dart';
 import 'package:my_project/Routes/report_page.dart';
 import 'package:my_project/Routes/sign_in.dart';
 import 'package:my_project/Routes/sing_up_page.dart';
+import 'package:my_project/Routes/success_page.dart';
 
 class Routing {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -33,6 +34,11 @@ class Routing {
         {
           String _adminName = settings.arguments as String;
           return MaterialPageRoute(builder: (_) => AdminPage(userName: _adminName));
+        }
+
+        case successPage:
+        {
+          return MaterialPageRoute(builder: (_) => const SuccessPage());
         }
       default:
         return MaterialPageRoute(
