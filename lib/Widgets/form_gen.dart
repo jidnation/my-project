@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/Models/configurations.dart';
 import 'package:my_project/Models/validator.dart';
 
 class SectionHeading extends StatelessWidget {
@@ -153,7 +154,7 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.symmetric(vertical: 20),
+        margin: const EdgeInsets.symmetric(vertical: 10),
         height: 50,
         width: length,
         decoration: BoxDecoration(
@@ -179,3 +180,115 @@ class Button extends StatelessWidget {
         ));
   }
 }
+
+class SymptomsWidget extends StatefulWidget {
+  const SymptomsWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<SymptomsWidget> createState() => _SymptomsWidgetState();
+}
+
+class _SymptomsWidgetState extends State<SymptomsWidget> {
+
+  bool? feverVal = false;
+  bool soreVal = false;
+  bool coughVal = false;
+  bool noseVal = false;
+  bool breathVal = false;
+  bool eyeVal = false;
+  bool spotVal = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        SymptomsCheckBox(
+          valueName: feverVal,
+          text: 'Fever',
+        ),
+        SymptomsCheckBox(
+          valueName: soreVal,
+          text: 'Sore Throat',
+        ),
+        SymptomsCheckBox(
+          valueName: coughVal,
+          text: 'Cough',
+        ),
+      ]),
+      const SizedBox(
+        height: 2,
+      ),
+      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        SymptomsCheckBox(
+          valueName: noseVal,
+          text: 'Nose-Bleeding',
+        ),
+        SymptomsCheckBox(
+          valueName: breathVal,
+          text: 'Short Breath',
+        ),
+      ]),
+      const SizedBox(
+        height: 2,
+      ),
+      Row(children: [
+        SymptomsCheckBox(
+          valueName: eyeVal,
+          text: 'Red Eye',
+        ),
+        const SizedBox(width: 10),
+        SymptomsCheckBox(
+          valueName: spotVal,
+          text: 'Body spot',
+        ),
+      ]),
+      const SizedBox(
+        height: 10,
+      ),
+      const SectionHeading(
+        title: 'Others Specify.',
+      ),
+      const RegForm(
+          labelValue: 'Other Sympthoms',
+          keyboardName: TextInputType.text, lineNumber: 2,),
+      const SizedBox(height: 20),
+    ]);
+  }
+}
+
+class SexRow extends StatelessWidget {
+  const SexRow({
+    Key? key,
+    required this.sex,
+  }) : super(key: key);
+
+  final String? sex;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: [
+      Padding(
+        padding: const EdgeInsets.only(left: 7.0),
+        child: Text(
+          'Sex : ',
+          style: TextStyle(
+              color: Colors.grey.shade800,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w800,
+              fontSize: 17),
+        ),
+      ),
+      const SizedBox(
+        width: 20,
+      ),
+      RadioButton(
+        value: sex,
+      ),
+    ]);
+  }
+}
+

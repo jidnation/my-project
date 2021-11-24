@@ -15,7 +15,7 @@ class ReportingPage extends StatefulWidget {
 class _ReportingPageState extends State<ReportingPage>
     with SingleTickerProviderStateMixin {
   final GlobalKey _reportKey = GlobalKey<FormState>();
-  String? sex;
+  String? _sex;
   late TabController _reportTabController;
 
   @override
@@ -118,25 +118,7 @@ class _ReportingPageState extends State<ReportingPage>
                           )
                         ],
                       ),
-                      Row(children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 7.0),
-                          child: Text(
-                            'Sex : ',
-                            style: TextStyle(
-                                color: Colors.grey.shade800,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w800,
-                                fontSize: 17),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        RadioButton(
-                          value: sex,
-                        ),
-                      ]),
+                      SexRow(sex: _sex),
                       Row(children: [
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 2.15,
@@ -170,7 +152,7 @@ class _ReportingPageState extends State<ReportingPage>
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            'If you are making report for yourself click SELF. \n If you are reporting on someone\'s behave click OTHERS.',
+                            'If you are making report for yourself click SELF. \nIf you are reporting on someone\'s behave click OTHERS.',
                             style: noticeTextStyle(),
                           ),
                         ]),
@@ -196,23 +178,18 @@ class _ReportingPageState extends State<ReportingPage>
                   Container(
                     constraints: const BoxConstraints(
                       minHeight: 100,
-                      maxHeight: 700,
+                      maxHeight: 1080,
                     ),
                     child:
-                        TabBarView(controller: _reportTabController, children: [
-                      const SelfWidget(),
-                      Container(color: Colors.green),
+                        TabBarView(controller: _reportTabController, children: const [
+                      SelfWidget(),
+                      OthersWidget(),
                     ]),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
-                  GestureDetector(
-                    child: const Button(length: 150, text: 'SUBMIT'),
-                    onTap: () {
-                      Navigator.pushNamed(context, successPage);
-                    },
-                  ),
+                 
                 ]),
               ),
             ),
