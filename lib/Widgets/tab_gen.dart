@@ -31,6 +31,7 @@ class _SelfWidgetState extends State<SelfWidget> {
                 height: 10,
               ),
               SymptomsWidget(),
+              SizedBox(height: 20,),
               SectionHeading(
                   title: 'Since when have you be having this feelings?.'),
               RegForm(
@@ -46,11 +47,13 @@ class _SelfWidgetState extends State<SelfWidget> {
               ),
             ]),
       ),
+      const Spacer(),
       Divider(
         height: 10,
         thickness: 2,
         color: Colors.grey.shade400,
       ),
+      const Spacer(),
       Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
         color: Colors.white,
@@ -59,6 +62,7 @@ class _SelfWidgetState extends State<SelfWidget> {
           style: noticeTextStyle(),
         ),
       ),
+      const Spacer(),
       Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         child: Column(
@@ -69,7 +73,7 @@ class _SelfWidgetState extends State<SelfWidget> {
                 keyboardName: TextInputType.text,
                 labelValue: 'Specify illness',
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 40),
               SectionHeading(title: 'Do you have anything to say?'),
               RegForm(
                 labelValue: 'Commet',
