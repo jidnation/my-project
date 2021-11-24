@@ -174,6 +174,7 @@ class _AdminFormRegState extends State<AdminFormReg> {
           const RegForm(
             keyboardName: TextInputType.visiblePassword,
             labelValue: 'Password',
+            lineNumber: 1
           ),
 
           ///Description
@@ -188,6 +189,7 @@ class _AdminFormRegState extends State<AdminFormReg> {
           const RegForm(
             keyboardName: TextInputType.text,
             labelValue: 'Description',
+            lineNumber: 3,
           ),
 
           const SizedBox(

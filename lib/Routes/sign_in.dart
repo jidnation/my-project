@@ -74,7 +74,7 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                         const RegForm(
                             keyboardName: TextInputType.visiblePassword,
-                            labelValue: 'Password'),
+                            labelValue: 'Password', lineNumber: 1,),
                         const SizedBox(
                           height: 50,
                         ),

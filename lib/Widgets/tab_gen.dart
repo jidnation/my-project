@@ -21,11 +21,14 @@ class _SelfWidgetState extends State<SelfWidget> {
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
+                SizedBox(
+                height: 20,
+              ),
               SectionHeading(
                 title: 'SYMPTOMS :',
               ),
               SizedBox(
-                height: 2,
+                height: 10,
               ),
               SymptomsWidget(),
               SectionHeading(
@@ -144,9 +147,15 @@ class _OthersWidgetState extends State<OthersWidget>
             const SizedBox(
               height: 10,
             ),
+             const SizedBox(
+                height: 20,
+              ),
+              const SectionHeading(
+                title: 'SYMPTOMS :',
+              ),
             const SymptomsWidget(),
             const SectionHeading(
-                title: 'Since when have you be having this feelings?.'),
+                title: 'Since when have he/she be having this feelings?.'),
             const RegForm(
               keyboardName: TextInputType.text,
               labelValue: 'Days',
