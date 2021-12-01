@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_project/Models/configurations.dart';
-import 'package:my_project/Routes/contacts.dart';
 import 'package:my_project/Widgets/form_gen.dart';
 import 'package:my_project/Widgets/tab_gen.dart';
 
@@ -14,7 +13,7 @@ class ReportingPage extends StatefulWidget {
 
 class _ReportingPageState extends State<ReportingPage>
     with SingleTickerProviderStateMixin {
-  final GlobalKey _reportKey = GlobalKey<FormState>();
+  final GlobalKey reportKey = GlobalKey<FormState>();
   String? _sex;
   late TabController _reportTabController;
 
@@ -24,14 +23,68 @@ class _ReportingPageState extends State<ReportingPage>
     _reportTabController = TabController(length: 2, vsync: this);
   }
 
+  TextEditingController surnameController = TextEditingController();
+  TextEditingController othersController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController stateController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController numberController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+
   @override
   void dispose() {
     _reportTabController.dispose();
+    surnameController;
+    othersController;
+    addressController;
+    stateController;
+    cityController;
+    numberController;
+    ageController;
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    // String? surnameStorage;
+    // String? othersStorage;
+    // String? addressStorage;
+    // String? cityStorage;
+    // String? stateStorage;
+    // String? sexStorage;
+    // String? numberStorage;
+    // String? fullNameStorage;
+    // String? pNumberStorage;
+    // String? ageStorage;
+    // String? relationStorage;
+    // String? pAddressStorage;
+
+    // List symptomsStorage = [];
+    // String? otherSymptomsStorage;
+    // String? haveIdeaStorage;
+    // String? healthIssueStorage;
+    // String? commetStorage;
+
+    // List data = [
+    //   String surname;
+    //   String others;
+    //   String address;
+    //   String street;
+    //   String city;
+    //   String sex;
+    //   String number;
+    //   String age;
+    //   List symptoms;
+    //   String othersymptoms;
+    //   String illnessHistory;
+    //   String haveIdea;
+    //   String healthIssue;
+    //   String commet;
+
+    // ];
+
+    // List dataList = [];
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -76,7 +129,7 @@ class _ReportingPageState extends State<ReportingPage>
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Form(
-                key: _reportKey,
+                key: reportKey,
                 child: Column(mainAxisSize: MainAxisSize.min, children: [
                   Container(
                     padding: const EdgeInsets.symmetric(
@@ -90,20 +143,24 @@ class _ReportingPageState extends State<ReportingPage>
                       const SizedBox(
                         height: 2,
                       ),
-                      const RegForm(
+                      RegForm(
+                          controller: surnameController,
                           labelValue: ' Surname',
                           keyboardName: TextInputType.text),
-                      const RegForm(
+                      RegForm(
+                          controller: othersController,
                           labelValue: ' Others',
                           keyboardName: TextInputType.text),
-                      const RegForm(
+                      RegForm(
+                          controller: addressController,
                           labelValue: ' Address',
                           keyboardName: TextInputType.text),
                       Row(
                         children: [
                           SizedBox(
                             width: MediaQuery.of(context).size.width / 2.9,
-                            child: const RegForm(
+                            child: RegForm(
+                                controller: stateController,
                                 labelValue: 'State',
                                 keyboardName: TextInputType.text),
                           ),
@@ -112,7 +169,8 @@ class _ReportingPageState extends State<ReportingPage>
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width / 2.15,
-                            child: const RegForm(
+                            child: RegForm(
+                                controller: cityController,
                                 labelValue: ' City',
                                 keyboardName: TextInputType.text),
                           )
@@ -122,7 +180,8 @@ class _ReportingPageState extends State<ReportingPage>
                       Row(children: [
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 2.15,
-                          child: const RegForm(
+                          child: RegForm(
+                              controller: numberController,
                               labelValue: 'Phone Number',
                               keyboardName: TextInputType.number),
                         ),
@@ -131,7 +190,8 @@ class _ReportingPageState extends State<ReportingPage>
                         ),
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 2.9,
-                          child: const RegForm(
+                          child: RegForm(
+                              controller: ageController,
                               labelValue: ' Age',
                               keyboardName: TextInputType.number),
                         )
@@ -177,19 +237,18 @@ class _ReportingPageState extends State<ReportingPage>
                       ]),
                   Container(
                     constraints: const BoxConstraints(
-                      minHeight: 100,
-                      maxHeight: 1140,
+                      // minHeight: 100,
+                      maxHeight: 1200,
                     ),
                     child:
-                        TabBarView(controller: _reportTabController, children: const [
-                      SelfWidget(),
-                      OthersWidget(),
+                        TabBarView(controller: _reportTabController, children: [
+                      SelfWidget(keyValue: reportKey as GlobalKey<FormState>),
+                      OthersWidget(keyValue: reportKey as GlobalKey<FormState>),
                     ]),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                 
                 ]),
               ),
             ),
@@ -199,4 +258,3 @@ class _ReportingPageState extends State<ReportingPage>
     );
   }
 }
-

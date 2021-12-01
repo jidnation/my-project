@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_project/Widgets/form_gen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 class AdminFormReg extends StatefulWidget {
   const AdminFormReg({Key? key}) : super(key: key);
 
@@ -10,6 +11,45 @@ class AdminFormReg extends StatefulWidget {
 
 class _AdminFormRegState extends State<AdminFormReg> {
   final adminFormKey = GlobalKey<FormState>();
+
+  TextEditingController aFirstnameController = TextEditingController();
+  TextEditingController ahospitalNameController = TextEditingController();
+  TextEditingController aMNameController = TextEditingController();
+  TextEditingController aLNameController = TextEditingController();
+  TextEditingController aStreetAddressController = TextEditingController();
+  TextEditingController aCityController = TextEditingController();
+  TextEditingController aStateController = TextEditingController();
+  TextEditingController aEmailController = TextEditingController();
+  TextEditingController aNumber1Controller = TextEditingController();
+  TextEditingController aNumber2Controller = TextEditingController();
+  TextEditingController aSpecialController = TextEditingController();
+  TextEditingController aDOBController = TextEditingController();
+  TextEditingController aReligiouController = TextEditingController();
+  TextEditingController aUserNameController = TextEditingController();
+  TextEditingController aPasswordController = TextEditingController();
+  TextEditingController aDescriptionController = TextEditingController();
+
+
+@override
+void dispose() {
+  aFirstnameController;
+  aCityController;
+  ahospitalNameController;
+  aMNameController;
+  aLNameController;
+  aSpecialController;
+  aStateController;
+  aStreetAddressController;
+  aDOBController;
+  aNumber1Controller;
+  aNumber2Controller;
+  aReligiouController;
+  aUserNameController;
+  aPasswordController;
+  aDescriptionController;
+  aEmailController;
+  super.dispose();
+}
 
   String? sex;
 
@@ -31,7 +71,8 @@ class _AdminFormRegState extends State<AdminFormReg> {
                       title: 'Hospital Name',
                     ),
                   ]),
-                  const RegForm(
+                  RegForm(
+                    controller: ahospitalNameController,
                     keyboardName: TextInputType.text,
                     labelValue: 'Medical center',
                   ),
@@ -45,15 +86,18 @@ class _AdminFormRegState extends State<AdminFormReg> {
                   ]),
 
                   ///Doctor Name
-                  const RegForm(
+                  RegForm(
                     keyboardName: TextInputType.text,
+                    controller: aFirstnameController,
                     labelValue: 'First Name',
                   ),
-                  const RegForm(
+                  RegForm(
+                    controller: aMNameController,
                     keyboardName: TextInputType.text,
                     labelValue: 'Middle Name',
                   ),
-                  const RegForm(
+                  RegForm(
+                    controller: aLNameController,
                     keyboardName: TextInputType.text,
                     labelValue: 'Last Name',
                   ),
@@ -67,15 +111,18 @@ class _AdminFormRegState extends State<AdminFormReg> {
                       SectionHeading(title: 'Address'),
                     ],
                   ),
-                  const RegForm(
+                  RegForm(
+                    controller: aStreetAddressController,
                     keyboardName: TextInputType.text,
                     labelValue: 'Street Address ',
                   ),
-                  const RegForm(
+                  RegForm(
+                    controller: aCityController,
                     keyboardName: TextInputType.text,
                     labelValue: 'City',
                   ),
-                  const RegForm(
+                  RegForm(
+                    controller: aStateController,
                     keyboardName: TextInputType.text,
                     labelValue: 'State / Province',
                   ),
@@ -89,15 +136,18 @@ class _AdminFormRegState extends State<AdminFormReg> {
                       SectionHeading(title: 'Contacts'),
                     ],
                   ),
-                  const RegForm(
+                  RegForm(
+                    controller: aEmailController,
                     keyboardName: TextInputType.emailAddress,
                     labelValue: 'Email ',
                   ),
-                  const RegForm(
+                  RegForm(
+                    controller: aNumber1Controller,
                     keyboardName: TextInputType.number,
                     labelValue: 'Phone Number 1',
                   ),
-                  const RegForm(
+                  RegForm(
+                    controller: aNumber2Controller,
                     keyboardName: TextInputType.number,
                     labelValue: 'Phone Number 2',
                   ),
@@ -113,7 +163,8 @@ class _AdminFormRegState extends State<AdminFormReg> {
               SectionHeading(title: 'Area of Specialization'),
             ],
           ),
-          const RegForm(
+          RegForm(
+            controller: aSpecialController,
             keyboardName: TextInputType.text,
             labelValue: 'Specialization',
           ),
@@ -128,7 +179,8 @@ class _AdminFormRegState extends State<AdminFormReg> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2.3,
-                  child: const RegForm(
+                  child: RegForm(
+                    controller: aDOBController,
                     keyboardName: TextInputType.datetime,
                     labelValue: 'DOB: DD/MM/YYYY',
                   ),
@@ -138,7 +190,8 @@ class _AdminFormRegState extends State<AdminFormReg> {
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2.4,
-                  child: const RegForm(
+                  child: RegForm(
+                    controller: aReligiouController,
                     keyboardName: TextInputType.text,
                     labelValue: 'Religion',
                   ),
@@ -164,18 +217,19 @@ class _AdminFormRegState extends State<AdminFormReg> {
           const SizedBox(
             height: 20,
           ),
-          const RegForm(
+          RegForm(
+            controller: aUserNameController,
             keyboardName: TextInputType.text,
             labelValue: 'UserName ',
           ),
           const SizedBox(
             height: 10,
           ),
-          const RegForm(
-            keyboardName: TextInputType.visiblePassword,
-            labelValue: 'Password',
-            lineNumber: 1
-          ),
+          RegForm(
+            controller: aUserNameController,
+              keyboardName: TextInputType.visiblePassword,
+              labelValue: 'Password',
+              lineNumber: 1),
 
           ///Description
           const SizedBox(
@@ -186,7 +240,8 @@ class _AdminFormRegState extends State<AdminFormReg> {
               SectionHeading(title: 'Description about yourself'),
             ],
           ),
-          const RegForm(
+          RegForm(
+            controller: aDescriptionController,
             keyboardName: TextInputType.text,
             labelValue: 'Description',
             lineNumber: 3,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_project/Models/validator.dart';
 import 'package:my_project/Routes/contacts.dart';
 import 'package:my_project/Widgets/form_gen.dart';
 
@@ -11,7 +10,8 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  late String  _name = '';
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   final _signInKey = GlobalKey<FormState>();
 
   @override
@@ -66,15 +66,19 @@ class _SignInPageState extends State<SignInPage> {
                     key: _signInKey,
                     child: Column(
                       children: [
-                        const RegForm(
+                        RegForm(
+                          controller: userNameController,
                             keyboardName: TextInputType.text,
                             labelValue: 'Username'),
                         const SizedBox(
                           height: 20,
                         ),
-                        const RegForm(
-                            keyboardName: TextInputType.visiblePassword,
-                            labelValue: 'Password', lineNumber: 1,),
+                        RegForm(
+                          controller: passwordController,
+                          keyboardName: TextInputType.visiblePassword,
+                          labelValue: 'Password',
+                          lineNumber: 1,
+                        ),
                         const SizedBox(
                           height: 50,
                         ),
@@ -90,11 +94,10 @@ class _SignInPageState extends State<SignInPage> {
                           child: TextButton.icon(
                             onPressed: () {
                               if (_signInKey.currentState!.validate()) {
-                                _name = ValidateInput.getter();
                                 Navigator.pushNamed(
                                   context,
                                   adminPage,
-                                  arguments: _name,
+                                  arguments: userNameController.text,
                                 );
                               }
                             },

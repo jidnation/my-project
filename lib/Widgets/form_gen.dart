@@ -22,32 +22,32 @@ class SectionHeading extends StatelessWidget {
   }
 }
 
-mixin Settings {
-  static dynamic textField() {}
-}
+// mixin Settings {
+//   static dynamic textField() {}
+// }
 
 class RegForm extends StatelessWidget {
   final String labelValue;
   final TextInputType keyboardName;
   final String? value;
   final int? lineNumber;
+  final TextEditingController controller;
 
   const RegForm(
       {Key? key,
       required this.labelValue,
       required this.keyboardName,
       this.value,
-      this.lineNumber})
+      this.lineNumber,
+      required this.controller})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
-      // padding: const EdgeInsets.only(left: 8, top: 0, bottom: 2),
       child: TextFormField(
         maxLines: (lineNumber != null) ? lineNumber : null,
-        maxLength: (keyboardName == TextInputType.number) ? 11 : null,
         style: const TextStyle(color: Color(0xff10002b)),
         keyboardType: keyboardName,
         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -55,6 +55,7 @@ class RegForm extends StatelessWidget {
             (keyboardName == TextInputType.visiblePassword) ? true : false,
         scrollPadding: const EdgeInsets.symmetric(vertical: 1, horizontal: 10),
         cursorHeight: 18,
+        controller: controller,
         cursorColor: const Color(0xff10002b),
         decoration: InputDecoration(
             labelText: labelValue,
@@ -82,7 +83,6 @@ class RegForm extends StatelessWidget {
               color: Colors.grey.shade500,
             ))),
         validator: (String? value) {
-          // return ValidateInput.dataValue(value, keyboardName);
           return const ValidateInput().inputChecker(value, keyboardName);
         },
       ),
@@ -92,7 +92,8 @@ class RegForm extends StatelessWidget {
 
 class RadioButton extends StatefulWidget {
   final String? value;
-  const RadioButton({Key? key, this.value}) : super(key: key);
+  String? storage;
+  RadioButton({Key? key, this.value, this.storage}) : super(key: key);
 
   static String? sex;
   @override
@@ -110,6 +111,7 @@ class _RadioButtonState extends State<RadioButton> {
         onChanged: (String? val) {
           setState(() {
             sex = val;
+            (val) != null ? widget.storage = sex : widget.storage = null;
           });
         },
         activeColor: const Color(0xff3c096c),
@@ -148,7 +150,8 @@ class Button extends StatelessWidget {
   const Button({
     Key? key,
     required this.text,
-    required this.length, this.color,
+    required this.length,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -159,7 +162,7 @@ class Button extends StatelessWidget {
         width: length,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: (color != null ) ? color! : const Color(0xff3c096c)),
+            color: (color != null) ? color! : const Color(0xff3c096c)),
         child: Center(
           child: Text(
             text,
@@ -182,8 +185,13 @@ class Button extends StatelessWidget {
 }
 
 class SymptomsWidget extends StatefulWidget {
-  const SymptomsWidget({
+  List symptoms;
+  String? otherSymptoms;
+
+  SymptomsWidget({
     Key? key,
+    required this.symptoms,
+    this.otherSymptoms,
   }) : super(key: key);
 
   @override
@@ -191,7 +199,6 @@ class SymptomsWidget extends StatefulWidget {
 }
 
 class _SymptomsWidgetState extends State<SymptomsWidget> {
-
   bool? feverVal = false;
   bool soreVal = false;
   bool coughVal = false;
@@ -200,73 +207,98 @@ class _SymptomsWidgetState extends State<SymptomsWidget> {
   bool eyeVal = false;
   bool spotVal = false;
 
+  String feverValStorage = '';
+  String soreValStorage = '';
+  String coughValStorage = '';
+  String noseValStorage = '';
+  String breathValStorage = '';
+  String eyeValStorage = '';
+  String spotValStorage = '';
+
+  TextEditingController oTherSymptomsController = TextEditingController();
+
+  @override
+  void dispose() {
+    oTherSymptomsController;
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        SymptomsCheckBox(
-          valueName: feverVal,
-          text: 'Fever',
-        ),
-        SymptomsCheckBox(
-          valueName: soreVal,
-          text: 'Sore Throat',
-        ),
-        SymptomsCheckBox(
-          valueName: coughVal,
-          text: 'Cough',
-        ),
-      ]),
+    setState(() {
+      widget.symptoms.add(feverValStorage);
+      widget.symptoms.add(soreValStorage);
+      widget.symptoms.add(coughValStorage);
+      widget.symptoms.add(noseValStorage);
+      widget.symptoms.add(breathValStorage);
+      widget.symptoms.add(eyeValStorage);
+      widget.symptoms.add(spotValStorage);
+    });
+
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      SymptomsCheckBox(
+        valueName: feverVal,
+        storage: feverValStorage,
+        text: 'Fever (ibà)',
+      ),
+      SymptomsCheckBox(
+        valueName: soreVal,
+        storage: soreValStorage,
+        text: 'Sore Throat (Ọgbẹ ọfun)',
+      ),
+      SymptomsCheckBox(
+        storage: coughValStorage,
+        valueName: coughVal,
+        text: 'Cough (Ikọ-aláìdúró)',
+      ),
       const SizedBox(
         height: 2,
       ),
-      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        SymptomsCheckBox(
-          valueName: noseVal,
-          text: 'Nose-Bleeding',
-        ),
-        SymptomsCheckBox(
-          valueName: breathVal,
-          text: 'Short Breath',
-        ),
-      ]),
+      SymptomsCheckBox(
+        valueName: noseVal,
+        text: 'Nose-Bleeding (Imu-Ẹjẹ)',
+      ),
+      SymptomsCheckBox(
+        storage: breathValStorage,
+        valueName: breathVal,
+        text: 'Short Breath (Ẹmi Kukuru)',
+      ),
+      SymptomsCheckBox(
+        storage: eyeValStorage,
+        valueName: eyeVal,
+        text: 'Red Eye (Oju pupa)',
+      ),
+      const SizedBox(width: 10),
+      SymptomsCheckBox(
+        valueName: spotVal,
+        storage: spotValStorage,
+        text: 'Body spot (Aami ara)',
+      ),
       const SizedBox(
         height: 2,
       ),
-      Row(children: [
-        SymptomsCheckBox(
-          valueName: eyeVal,
-          text: 'Red Eye',
-        ),
-        const SizedBox(width: 10),
-        SymptomsCheckBox(
-          valueName: spotVal,
-          text: 'Body spot',
-        ),
-      ]),
       const SizedBox(
         height: 10,
       ),
       const SectionHeading(
-        title: 'Others Specify.',
+        title: 'Others Specify. (Awọn miran Pato)',
       ),
-      const RegForm(
-          labelValue: 'Other Sympthoms',
-          keyboardName: TextInputType.text, lineNumber: 2,),
+      RegForm(
+        controller: oTherSymptomsController,
+        labelValue: 'Other Sympthoms (Awọn miran)',
+        keyboardName: TextInputType.text,
+        lineNumber: 2,
+      ),
       const SizedBox(height: 20),
     ]);
   }
 }
 
 class SexRow extends StatelessWidget {
-  const SexRow({
-    Key? key,
-    required this.sex,
-  }) : super(key: key);
+  SexRow({Key? key, required this.sex, this.sexValue}) : super(key: key);
 
   final String? sex;
+  String? sexValue;
 
   @override
   Widget build(BuildContext context) {
@@ -286,9 +318,9 @@ class SexRow extends StatelessWidget {
         width: 20,
       ),
       RadioButton(
+        storage: sexValue,
         value: sex,
       ),
     ]);
   }
 }
-

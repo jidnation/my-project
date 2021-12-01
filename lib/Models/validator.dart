@@ -11,6 +11,7 @@ class ValidateInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container();
+
   }
 
   static var result;
@@ -21,19 +22,18 @@ class ValidateInput extends StatelessWidget {
         if (value.isEmpty) {
           return 'Invalid input';
         }
-      result = value;
         return null;
       } else if (type == TextInputType.number) {
+        List validStarter = ['080', '070', '090', '081', '091'];
         if (value.length >= 3) {
-          String? starter = value[0] + value[1] + value[2];
-          if (starter != '080' ||
-              starter != '081' ||
-              starter != '090' ||
-              starter != '091' ||
-              starter != '070') {
-            return 'Invalid format';
-          }
+          String? value1 = value[0];
+          String? value2 = value[1];
+          String? value3 = value[2];
+          String? starters = value1 + value2 + value3;
+          if (validStarter.contains(starters)) {
           return null;
+          }
+            return 'Invalid Input';
         }
       } else if (type == TextInputType.visiblePassword) {
         if (value.length < 8) {
@@ -50,7 +50,7 @@ class ValidateInput extends StatelessWidget {
     }
   }
 
-    static getter() {
+  static getter() {
     return result;
   }
 }

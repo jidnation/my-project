@@ -12,7 +12,10 @@ TextStyle noticeTextStyle() {
 class SymptomsCheckBox extends StatefulWidget {
   bool? valueName;
   String text;
-  SymptomsCheckBox({Key? key, required this.valueName, required this.text}) : super(key: key);
+  String? storage;
+  SymptomsCheckBox(
+      {Key? key, required this.valueName, required this.text, this.storage})
+      : super(key: key);
 
   @override
   State<SymptomsCheckBox> createState() => _SymptomsCheckBoxState();
@@ -32,6 +35,9 @@ class _SymptomsCheckBoxState extends State<SymptomsCheckBox> {
               onChanged: (bool? value) {
                 setState(() {
                   widget.valueName = value;
+                  (value!)
+                      ? widget.storage = 'checked'
+                      : widget.storage = 'uncheck';
                 });
               }),
         ),
