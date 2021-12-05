@@ -53,4 +53,11 @@ class ValidateInput extends StatelessWidget {
   static getter() {
     return result;
   }
+
+  
+}
+
+void validateAdmin(String userName, String password) {
+
+  
 }

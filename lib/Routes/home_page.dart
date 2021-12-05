@@ -16,6 +16,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: const Color(0xffe0aaff),
       body: ListView(
         children: const [
+          // Text(context.select<FileController, String>((controller) => controller.user.userName)),
           CarouselView(),
           LowerPart(),
         ],

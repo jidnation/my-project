@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_project/Models/configurations.dart';
+import 'package:my_project/Models/data_controller.dart';
 import 'package:my_project/Routes/contacts.dart';
 import 'package:my_project/Widgets/form_gen.dart';
 
@@ -9,28 +10,23 @@ class SelfWidget extends StatefulWidget {
 
   @override
   State<SelfWidget> createState() => _SelfWidgetState();
+
+  static TextEditingController commentController = TextEditingController();
+  static TextEditingController healthIssuesController = TextEditingController();
+  static TextEditingController nameGuessingController = TextEditingController();
+  static TextEditingController illnessHistoryController =
+      TextEditingController();
 }
 
 class _SelfWidgetState extends State<SelfWidget> {
-  List selfStorage = [];
-  late String _days = '';
-  List symptoms = [];
-  String? otherSymptoms;
-  String? haveIdea;
-  String? healthIssue;
-  String? commet;
-
-  TextEditingController commentController = TextEditingController();
-  TextEditingController specifyIllnessController = TextEditingController();
-  TextEditingController otherDiseaseController = TextEditingController();
-  TextEditingController daysController = TextEditingController();
-
+  List<dynamic> valueList = [];
   @override
   void dispose() {
-    commentController;
-    specifyIllnessController;
-    otherDiseaseController;
-    daysController;
+    // SelfWidget.commentController.dispose();
+    // SelfWidget.healthIssuesController.dispose();
+    // SelfWidget.nameGuessingController.dispose();
+    // SymptomsWidget.otherSymptomsController.dispose();  //It is cursing problem in otherWidget in report page
+    // SelfWidget.illnessHistoryController.dispose();
     super.dispose();
   }
 
@@ -49,14 +45,14 @@ class _SelfWidgetState extends State<SelfWidget> {
           const SizedBox(
             height: 10,
           ),
-          SymptomsWidget(otherSymptoms: otherSymptoms, symptoms: symptoms),
+          const SymptomsWidget(),
           const SizedBox(
             height: 20,
           ),
           const SectionHeading(
               title: 'Since when have you be having this feelings?.'),
           RegForm(
-            controller: daysController,
+            controller: SelfWidget.illnessHistoryController,
             keyboardName: TextInputType.text,
             labelValue: 'Days',
           ),
@@ -64,7 +60,7 @@ class _SelfWidgetState extends State<SelfWidget> {
           const SectionHeading(
               title: 'Do you somehow knows the name of the disease?.'),
           RegForm(
-            controller: otherDiseaseController,
+            controller: SelfWidget.nameGuessingController,
             keyboardName: TextInputType.text,
             labelValue: 'If Yes, Specify.',
           ),
@@ -91,14 +87,14 @@ class _SelfWidgetState extends State<SelfWidget> {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const SectionHeading(title: 'If Yes, Specify'),
           RegForm(
-            controller: specifyIllnessController,
+            controller: SelfWidget.healthIssuesController,
             keyboardName: TextInputType.text,
             labelValue: 'Specify illness',
           ),
           const SizedBox(height: 40),
           const SectionHeading(title: 'Do you have anything to say?'),
           RegForm(
-            controller: commentController,
+            controller: SelfWidget.commentController,
             labelValue: 'Commet',
             keyboardName: TextInputType.text,
             lineNumber: 4,
@@ -110,11 +106,9 @@ class _SelfWidgetState extends State<SelfWidget> {
         child: const Button(length: 150, text: 'SUBMIT'),
         onTap: () {
           if (widget.keyValue.currentState!.validate()) {
+            // saveReportData();
             Navigator.pushNamed(context, successPage);
           }
-          print(
-            'Done $_days',
-          );
           print("fail!");
         },
       ),
@@ -123,48 +117,42 @@ class _SelfWidgetState extends State<SelfWidget> {
       ),
     ]);
   }
+
 }
 
 class OthersWidget extends StatefulWidget {
   final GlobalKey<FormState> keyValue;
 
-  OthersWidget({
+  const OthersWidget({
     Key? key,
     required this.keyValue,
   }) : super(key: key);
 
   @override
   _OthersWidgetState createState() => _OthersWidgetState();
+
+  static TextEditingController pCommetController = TextEditingController();
+  static TextEditingController pSpecifyIllnessController =
+      TextEditingController();
+  static TextEditingController rRelationController = TextEditingController();
+  static TextEditingController pAgeController = TextEditingController();
+  static TextEditingController pNumberController = TextEditingController();
+  static TextEditingController pAddressController = TextEditingController();
+  static TextEditingController pFullNameController = TextEditingController();
 }
 
 class _OthersWidgetState extends State<OthersWidget>
     with SingleTickerProviderStateMixin {
-  List symptoms = [];
-  String? otherSymptoms;
-  String? fullName;
-  String? pNumber;
-  String? age;
-  String? relation;
-  String? pAddress;
-
-  TextEditingController pCommetController = TextEditingController();
-  TextEditingController pSpecifyIllnessController = TextEditingController();
-  TextEditingController rRelationController = TextEditingController();
-  TextEditingController pAgeController = TextEditingController();
-  TextEditingController pNumberController = TextEditingController();
-  TextEditingController pAddressController = TextEditingController();
-  TextEditingController pFullNameController = TextEditingController();
-
   @override
   void dispose() {
-    pCommetController;
-    pSpecifyIllnessController;
-    rRelationController;
-    pAgeController;
-    pNumberController;
-    pAddressController;
-    pFullNameController;
-    super.dispose;
+    // OthersWidget.pCommetController.dispose();
+    // OthersWidget.pSpecifyIllnessController.dispose();
+    // OthersWidget.rRelationController.dispose();
+    // OthersWidget.pAgeController.dispose();
+    // OthersWidget.pNumberController.dispose();
+    // OthersWidget.pAddressController.dispose();
+    // OthersWidget.pFullNameController.dispose();
+    super.dispose();
   }
 
   String? _sex;
@@ -184,11 +172,11 @@ class _OthersWidgetState extends State<OthersWidget>
               height: 10,
             ),
             RegForm(
-                controller: pFullNameController,
+                controller: OthersWidget.pFullNameController,
                 labelValue: 'FullName',
                 keyboardName: TextInputType.text),
             RegForm(
-                controller: pAddressController,
+                controller: OthersWidget.pAddressController,
                 labelValue: 'Address',
                 keyboardName: TextInputType.text),
             SexRow(sex: _sex),
@@ -196,7 +184,7 @@ class _OthersWidgetState extends State<OthersWidget>
               SizedBox(
                 width: MediaQuery.of(context).size.width / 2.15,
                 child: RegForm(
-                    controller: pNumberController,
+                    controller: OthersWidget.pNumberController,
                     labelValue: 'Phone Number',
                     keyboardName: TextInputType.number),
               ),
@@ -206,7 +194,7 @@ class _OthersWidgetState extends State<OthersWidget>
               SizedBox(
                 width: MediaQuery.of(context).size.width / 2.9,
                 child: RegForm(
-                    controller: pAgeController,
+                    controller: OthersWidget.pAgeController,
                     labelValue: ' Age',
                     keyboardName: TextInputType.number),
               )
@@ -216,7 +204,7 @@ class _OthersWidgetState extends State<OthersWidget>
             ),
             const SectionHeading(title: 'Who are you to the person?'),
             RegForm(
-              controller: rRelationController,
+              controller: OthersWidget.rRelationController,
               labelValue: '',
               keyboardName: TextInputType.text,
             ),
@@ -229,7 +217,7 @@ class _OthersWidgetState extends State<OthersWidget>
             const SectionHeading(
               title: 'SYMPTOMS :',
             ),
-            SymptomsWidget(symptoms: symptoms, otherSymptoms: otherSymptoms),
+            const SymptomsWidget(),
           ]),
         ),
         Divider(
@@ -251,14 +239,14 @@ class _OthersWidgetState extends State<OthersWidget>
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             const SectionHeading(title: 'If Yes, Specify'),
             RegForm(
-              controller: pSpecifyIllnessController,
+              controller: OthersWidget.pSpecifyIllnessController,
               keyboardName: TextInputType.text,
               labelValue: 'Specify illness',
             ),
             const SizedBox(height: 10),
             const SectionHeading(title: 'Do you have anything to say?'),
             RegForm(
-              controller: pCommetController,
+              controller: OthersWidget.pCommetController,
               labelValue: 'Commet',
               keyboardName: TextInputType.text,
               lineNumber: 4,
@@ -273,6 +261,7 @@ class _OthersWidgetState extends State<OthersWidget>
               Navigator.pushNamed(context, successPage);
             }
             print('fail2');
+            ReportData().saveReportData2();
           },
         ),
       ]),

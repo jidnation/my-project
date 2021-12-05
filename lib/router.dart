@@ -32,11 +32,11 @@ class Routing {
 
       case adminPage:
         {
-          var _adminName = settings.arguments.toString();
-          return MaterialPageRoute(builder: (_) => AdminPage(userName: _adminName));
+          var argument = settings.arguments.toString();
+          return MaterialPageRoute(
+              builder: (_) => AdminPage(userName: argument));
         }
-
-        case successPage:
+      case successPage:
         {
           return MaterialPageRoute(builder: (_) => const SuccessPage());
         }

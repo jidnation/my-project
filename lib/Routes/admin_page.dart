@@ -4,17 +4,16 @@ import 'package:my_project/Widgets/containers.dart';
 
 class AdminPage extends StatefulWidget {
   final String userName;
-  const AdminPage({Key? key,  required this.userName}) : super(key: key);
+  const AdminPage({Key? key, required this.userName}) : super(key: key);
 
   @override
   _AdminPageState createState() => _AdminPageState();
 }
 
 class _AdminPageState extends State<AdminPage> {
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+      return Scaffold(
       body: SafeArea(
         child: ListView(
           children: [

@@ -92,12 +92,13 @@ class RegForm extends StatelessWidget {
 
 class RadioButton extends StatefulWidget {
   final String? value;
-  String? storage;
-  RadioButton({Key? key, this.value, this.storage}) : super(key: key);
+  const RadioButton({Key? key, this.value}) : super(key: key);
 
   static String? sex;
   @override
   _RadioButtonState createState() => _RadioButtonState();
+
+  static String? sexValue;
 }
 
 class _RadioButtonState extends State<RadioButton> {
@@ -111,7 +112,9 @@ class _RadioButtonState extends State<RadioButton> {
         onChanged: (String? val) {
           setState(() {
             sex = val;
-            (val) != null ? widget.storage = sex : widget.storage = null;
+            (val) != null
+                ? RadioButton.sexValue = sex
+                : RadioButton.sexValue = null;
           });
         },
         activeColor: const Color(0xff3c096c),
@@ -131,6 +134,9 @@ class _RadioButtonState extends State<RadioButton> {
         onChanged: (String? val) {
           setState(() {
             sex = val;
+            (val) != null
+                ? RadioButton.sexValue = sex
+                : RadioButton.sexValue = null;
           });
         },
         activeColor: const Color(0xff3c096c),
@@ -185,93 +191,74 @@ class Button extends StatelessWidget {
 }
 
 class SymptomsWidget extends StatefulWidget {
-  List symptoms;
-  String? otherSymptoms;
-
-  SymptomsWidget({
+  const SymptomsWidget({
     Key? key,
-    required this.symptoms,
-    this.otherSymptoms,
   }) : super(key: key);
 
   @override
   State<SymptomsWidget> createState() => _SymptomsWidgetState();
+
+  static TextEditingController otherSymptomsController =  TextEditingController();
+
+   static bool feverVal = false;
+  static bool soreVal = false;
+  static bool coughVal = false;
+  static bool noseVal = false;
+  static bool breathVal = false;
+  static bool eyeVal = false;
+  static bool spotVal = false;
 }
 
 class _SymptomsWidgetState extends State<SymptomsWidget> {
-  bool? feverVal = false;
-  bool soreVal = false;
-  bool coughVal = false;
-  bool noseVal = false;
-  bool breathVal = false;
-  bool eyeVal = false;
-  bool spotVal = false;
 
-  String feverValStorage = '';
-  String soreValStorage = '';
-  String coughValStorage = '';
-  String noseValStorage = '';
-  String breathValStorage = '';
-  String eyeValStorage = '';
-  String spotValStorage = '';
-
-  TextEditingController oTherSymptomsController = TextEditingController();
+  // String feverValStorage = '';
+  // String soreValStorage = '';
+  // String coughValStorage = '';
+  // String noseValStorage = '';
+  // String breathValStorage = '';
+  // String eyeValStorage = '';
+  // String spotValStorage = '';
 
   @override
-  void dispose() {
-    oTherSymptomsController;
-    super.dispose();
-  }
+  // void dispose() {
+  //   SymptomsWidget.otherSymptomsController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      widget.symptoms.add(feverValStorage);
-      widget.symptoms.add(soreValStorage);
-      widget.symptoms.add(coughValStorage);
-      widget.symptoms.add(noseValStorage);
-      widget.symptoms.add(breathValStorage);
-      widget.symptoms.add(eyeValStorage);
-      widget.symptoms.add(spotValStorage);
-    });
 
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SymptomsCheckBox(
-        valueName: feverVal,
-        storage: feverValStorage,
+        valueName: SymptomsWidget.feverVal,
         text: 'Fever (ibà)',
       ),
       SymptomsCheckBox(
-        valueName: soreVal,
-        storage: soreValStorage,
+        valueName: SymptomsWidget.soreVal,
         text: 'Sore Throat (Ọgbẹ ọfun)',
       ),
       SymptomsCheckBox(
-        storage: coughValStorage,
-        valueName: coughVal,
+        valueName: SymptomsWidget.coughVal,
         text: 'Cough (Ikọ-aláìdúró)',
       ),
       const SizedBox(
         height: 2,
       ),
       SymptomsCheckBox(
-        valueName: noseVal,
+        valueName: SymptomsWidget.noseVal,
         text: 'Nose-Bleeding (Imu-Ẹjẹ)',
       ),
       SymptomsCheckBox(
-        storage: breathValStorage,
-        valueName: breathVal,
+        valueName: SymptomsWidget.breathVal,
         text: 'Short Breath (Ẹmi Kukuru)',
       ),
       SymptomsCheckBox(
-        storage: eyeValStorage,
-        valueName: eyeVal,
+        valueName: SymptomsWidget.eyeVal,
         text: 'Red Eye (Oju pupa)',
       ),
       const SizedBox(width: 10),
       SymptomsCheckBox(
-        valueName: spotVal,
-        storage: spotValStorage,
+        valueName: SymptomsWidget.spotVal,
         text: 'Body spot (Aami ara)',
       ),
       const SizedBox(
@@ -284,7 +271,7 @@ class _SymptomsWidgetState extends State<SymptomsWidget> {
         title: 'Others Specify. (Awọn miran Pato)',
       ),
       RegForm(
-        controller: oTherSymptomsController,
+        controller: SymptomsWidget.otherSymptomsController,
         labelValue: 'Other Sympthoms (Awọn miran)',
         keyboardName: TextInputType.text,
         lineNumber: 2,
@@ -295,10 +282,9 @@ class _SymptomsWidgetState extends State<SymptomsWidget> {
 }
 
 class SexRow extends StatelessWidget {
-  SexRow({Key? key, required this.sex, this.sexValue}) : super(key: key);
+  const SexRow({Key? key, required this.sex}) : super(key: key);
 
   final String? sex;
-  String? sexValue;
 
   @override
   Widget build(BuildContext context) {
@@ -318,7 +304,6 @@ class SexRow extends StatelessWidget {
         width: 20,
       ),
       RadioButton(
-        storage: sexValue,
         value: sex,
       ),
     ]);

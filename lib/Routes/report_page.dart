@@ -9,6 +9,14 @@ class ReportingPage extends StatefulWidget {
 
   @override
   _ReportingPageState createState() => _ReportingPageState();
+  static TextEditingController surnameController = TextEditingController();
+    static TextEditingController othersController = TextEditingController();
+  static TextEditingController addressController = TextEditingController();
+  static TextEditingController stateController = TextEditingController();
+  static TextEditingController cityController = TextEditingController();
+  static TextEditingController numberController = TextEditingController();
+  static TextEditingController ageController = TextEditingController();
+
 }
 
 class _ReportingPageState extends State<ReportingPage>
@@ -23,67 +31,22 @@ class _ReportingPageState extends State<ReportingPage>
     _reportTabController = TabController(length: 2, vsync: this);
   }
 
-  TextEditingController surnameController = TextEditingController();
-  TextEditingController othersController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
-  TextEditingController stateController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
-  TextEditingController numberController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
 
   @override
   void dispose() {
     _reportTabController.dispose();
-    surnameController;
-    othersController;
-    addressController;
-    stateController;
-    cityController;
-    numberController;
-    ageController;
+    ReportingPage.surnameController.dispose();
+    ReportingPage.othersController.dispose();
+    ReportingPage.addressController.dispose();
+    ReportingPage.stateController.dispose();
+    ReportingPage.cityController.dispose();
+    ReportingPage.numberController.dispose();
+    ReportingPage.ageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // String? surnameStorage;
-    // String? othersStorage;
-    // String? addressStorage;
-    // String? cityStorage;
-    // String? stateStorage;
-    // String? sexStorage;
-    // String? numberStorage;
-    // String? fullNameStorage;
-    // String? pNumberStorage;
-    // String? ageStorage;
-    // String? relationStorage;
-    // String? pAddressStorage;
-
-    // List symptomsStorage = [];
-    // String? otherSymptomsStorage;
-    // String? haveIdeaStorage;
-    // String? healthIssueStorage;
-    // String? commetStorage;
-
-    // List data = [
-    //   String surname;
-    //   String others;
-    //   String address;
-    //   String street;
-    //   String city;
-    //   String sex;
-    //   String number;
-    //   String age;
-    //   List symptoms;
-    //   String othersymptoms;
-    //   String illnessHistory;
-    //   String haveIdea;
-    //   String healthIssue;
-    //   String commet;
-
-    // ];
-
-    // List dataList = [];
 
     return Scaffold(
       appBar: AppBar(
@@ -144,15 +107,15 @@ class _ReportingPageState extends State<ReportingPage>
                         height: 2,
                       ),
                       RegForm(
-                          controller: surnameController,
+                          controller: ReportingPage.surnameController,
                           labelValue: ' Surname',
                           keyboardName: TextInputType.text),
                       RegForm(
-                          controller: othersController,
+                          controller: ReportingPage.othersController,
                           labelValue: ' Others',
                           keyboardName: TextInputType.text),
                       RegForm(
-                          controller: addressController,
+                          controller: ReportingPage.addressController,
                           labelValue: ' Address',
                           keyboardName: TextInputType.text),
                       Row(
@@ -160,7 +123,7 @@ class _ReportingPageState extends State<ReportingPage>
                           SizedBox(
                             width: MediaQuery.of(context).size.width / 2.9,
                             child: RegForm(
-                                controller: stateController,
+                                controller: ReportingPage.stateController,
                                 labelValue: 'State',
                                 keyboardName: TextInputType.text),
                           ),
@@ -170,7 +133,7 @@ class _ReportingPageState extends State<ReportingPage>
                           SizedBox(
                             width: MediaQuery.of(context).size.width / 2.15,
                             child: RegForm(
-                                controller: cityController,
+                                controller: ReportingPage.cityController,
                                 labelValue: ' City',
                                 keyboardName: TextInputType.text),
                           )
@@ -181,7 +144,7 @@ class _ReportingPageState extends State<ReportingPage>
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 2.15,
                           child: RegForm(
-                              controller: numberController,
+                              controller: ReportingPage.numberController,
                               labelValue: 'Phone Number',
                               keyboardName: TextInputType.number),
                         ),
@@ -191,7 +154,7 @@ class _ReportingPageState extends State<ReportingPage>
                         SizedBox(
                           width: MediaQuery.of(context).size.width / 2.9,
                           child: RegForm(
-                              controller: ageController,
+                              controller: ReportingPage.ageController,
                               labelValue: ' Age',
                               keyboardName: TextInputType.number),
                         )
