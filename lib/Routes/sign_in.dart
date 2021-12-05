@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/Models/database_controller.dart';
+import 'package:my_project/Models/json_formatter.dart';
 import 'package:my_project/Routes/contacts.dart';
 import 'package:my_project/Widgets/form_gen.dart';
 
@@ -18,6 +20,39 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     final double wid = MediaQuery.of(context).size.width;
     final double hei = MediaQuery.of(context).size.height;
+
+    Database _database = Database();
+    var passwordSnackBar = SnackBar(
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      margin: EdgeInsets.only(bottom: hei * 0.87),
+      backgroundColor: Colors.red.shade400,
+      duration: const Duration(seconds: 2),
+      padding: const EdgeInsets.all(20),
+      content: const Text('Incorrect Password',
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Poppins',
+              letterSpacing: 1)),
+    );
+    var nameSnackBar = SnackBar(
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      margin: EdgeInsets.only(bottom: hei * 0.87),
+      backgroundColor: Colors.red.shade400,
+      duration: const Duration(seconds: 2),
+      padding: const EdgeInsets.all(20),
+      content: const Text('InValid UserName',
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Poppins',
+              letterSpacing: 1)),
+    );
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -94,39 +129,33 @@ class _SignInPageState extends State<SignInPage> {
                                   width: 0.4, color: const Color(0xff9d4edd)),
                             ),
                             child: TextButton.icon(
-                              onPressed: () {
+                              onPressed: () async {
+                                await _database.tableGen();
+                                List<User> registeredUsers;
+
+                                registeredUsers = await _database.users();
                                 if (_signInKey.currentState!.validate()) {
-                                  var snackBar = SnackBar(
-                                    behavior: SnackBarBehavior.floating,
-                                    margin: EdgeInsets.only(bottom: hei * 0.87),
-                                    backgroundColor: Colors.red.shade400,
-                                    duration: const Duration(seconds: 2),
-                                    padding: const EdgeInsets.all(20),
-                                    content: const Text(
-                                        'Invalid UserName or Password',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400,
-                                            fontFamily: 'Poppins',
-                                            letterSpacing: 1)),
-                                  );
-                                  if (_signInKey.currentState!.validate()) {
-                                    Map<String, String> userInput = {
-                                      'userName': userNameController.text,
-                                      'password': passwordController.text
-                                    };
-                                    // if (_registerUsers.userName ==
-                                    //         userInput['userName'] &&
-                                    //     _registerUsers.password ==
-                                    //         userInput['password']) {
-                                    //   Navigator.pushNamed(context, adminPage,
-                                    //       arguments: userInput['userName']);
-                                    // } else {
-                                    //   ScaffoldMessenger.of(context)
-                                    //       .showSnackBar(snackBar);
-                                    // }
+                                  for (int i = 0;
+                                      i < registeredUsers.length;
+                                      i++) {
+                                    if (registeredUsers[i].userName ==
+                                        userNameController.text) {
+                                      if (registeredUsers[i].password ==
+                                          passwordController.text) {
+                                        Navigator.pushNamed(context, adminPage,
+                                            arguments: userNameController.text);
+                                        return null;
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(passwordSnackBar);
+                                        return null;
+                                      }
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(nameSnackBar);
+                                    }
                                   }
+                                  ;
                                 }
                               },
                               icon: Icon(

@@ -57,3 +57,31 @@ class _SymptomsCheckBoxState extends State<SymptomsCheckBox> {
     );
   }
 }
+
+class SnackBarDecoration extends StatelessWidget {
+  const SnackBarDecoration({
+    Key? key,
+    required this.hei,
+  }) : super(key: key);
+
+  final double hei;
+
+  @override
+  Widget build(BuildContext context) {
+    return SnackBar(
+      behavior: SnackBarBehavior.floating,
+      margin: EdgeInsets.only(bottom: hei * 0.87),
+      backgroundColor: Colors.red.shade400,
+      duration: const Duration(seconds: 2),
+      padding: const EdgeInsets.all(20),
+      content: const Text(
+          'Invalid UserName or Password',
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Poppins',
+              letterSpacing: 1)),
+    );
+  }
+}

@@ -106,9 +106,9 @@ class _SelfWidgetState extends State<SelfWidget> {
         child: const Button(length: 150, text: 'SUBMIT'),
         onTap: () {
           if (widget.keyValue.currentState!.validate()) {
-            // saveReportData();
             Navigator.pushNamed(context, successPage);
           }
+            ReportData().saveReportData();
           print("fail!");
         },
       ),

@@ -6,8 +6,9 @@ import 'package:my_project/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //Open DataBase and store the reference.
-  DataBase().databaseControlRoom();
+  Database _database = Database();
+  
+  await _database.tableGen();
   runApp(
     const MyApp(),
   );
@@ -21,9 +22,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // User admin2 = User(id: 2, userName: 'Adeola', password: 'password');
-    // DataBase.databaseControlRoom.insertUser(admin2);
-    // print(databaseControlRoom().users());
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: _title,

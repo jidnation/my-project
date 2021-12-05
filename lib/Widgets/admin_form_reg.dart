@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_project/Models/data_controller.dart';
 import 'package:my_project/Widgets/form_gen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -7,49 +8,49 @@ class AdminFormReg extends StatefulWidget {
 
   @override
   _AdminFormRegState createState() => _AdminFormRegState();
+  static TextEditingController aFirstnameController = TextEditingController();
+  static TextEditingController ahospitalNameController =
+      TextEditingController();
+  static TextEditingController aMNameController = TextEditingController();
+  static TextEditingController aLNameController = TextEditingController();
+  static TextEditingController aStreetAddressController =
+      TextEditingController();
+  static TextEditingController aCityController = TextEditingController();
+  static TextEditingController aStateController = TextEditingController();
+  static TextEditingController aEmailController = TextEditingController();
+  static TextEditingController aNumber1Controller = TextEditingController();
+  static TextEditingController aNumber2Controller = TextEditingController();
+  static TextEditingController aSpecialController = TextEditingController();
+  static TextEditingController aDOBController = TextEditingController();
+  static TextEditingController aReligiouController = TextEditingController();
+  static TextEditingController aUserNameController = TextEditingController();
+  static TextEditingController aPasswordController = TextEditingController();
+  static TextEditingController aDescriptionController = TextEditingController();
 }
 
 class _AdminFormRegState extends State<AdminFormReg> {
   final adminFormKey = GlobalKey<FormState>();
 
-  TextEditingController aFirstnameController = TextEditingController();
-  TextEditingController ahospitalNameController = TextEditingController();
-  TextEditingController aMNameController = TextEditingController();
-  TextEditingController aLNameController = TextEditingController();
-  TextEditingController aStreetAddressController = TextEditingController();
-  TextEditingController aCityController = TextEditingController();
-  TextEditingController aStateController = TextEditingController();
-  TextEditingController aEmailController = TextEditingController();
-  TextEditingController aNumber1Controller = TextEditingController();
-  TextEditingController aNumber2Controller = TextEditingController();
-  TextEditingController aSpecialController = TextEditingController();
-  TextEditingController aDOBController = TextEditingController();
-  TextEditingController aReligiouController = TextEditingController();
-  TextEditingController aUserNameController = TextEditingController();
-  TextEditingController aPasswordController = TextEditingController();
-  TextEditingController aDescriptionController = TextEditingController();
-
-
-@override
-void dispose() {
-  aFirstnameController;
-  aCityController;
-  ahospitalNameController;
-  aMNameController;
-  aLNameController;
-  aSpecialController;
-  aStateController;
-  aStreetAddressController;
-  aDOBController;
-  aNumber1Controller;
-  aNumber2Controller;
-  aReligiouController;
-  aUserNameController;
-  aPasswordController;
-  aDescriptionController;
-  aEmailController;
-  super.dispose();
-}
+  @override
+  void dispose() {
+    AdminFormReg.aFirstnameController;
+    AdminFormReg.aCityController;
+    AdminFormReg.ahospitalNameController;
+    AdminFormReg.aMNameController;
+    AdminFormReg.aLNameController;
+    AdminFormReg.aSpecialController;
+    AdminFormReg.aStateController;
+    AdminFormReg.aStreetAddressController;
+    AdminFormReg.aDOBController;
+    AdminFormReg.aNumber1Controller;
+    AdminFormReg.aNumber2Controller;
+    AdminFormReg.aReligiouController;
+    AdminFormReg.aUserNameController;
+    AdminFormReg.aPasswordController;
+    AdminFormReg.aDescriptionController;
+    AdminFormReg.aEmailController;
+    super.dispose();
+  }
 
   String? sex;
 
@@ -72,7 +73,7 @@ void dispose() {
                     ),
                   ]),
                   RegForm(
-                    controller: ahospitalNameController,
+                    controller: AdminFormReg.ahospitalNameController,
                     keyboardName: TextInputType.text,
                     labelValue: 'Medical center',
                   ),
@@ -88,16 +89,16 @@ void dispose() {
                   ///Doctor Name
                   RegForm(
                     keyboardName: TextInputType.text,
-                    controller: aFirstnameController,
+                    controller: AdminFormReg.aFirstnameController,
                     labelValue: 'First Name',
                   ),
                   RegForm(
-                    controller: aMNameController,
+                    controller: AdminFormReg.aMNameController,
                     keyboardName: TextInputType.text,
                     labelValue: 'Middle Name',
                   ),
                   RegForm(
-                    controller: aLNameController,
+                    controller: AdminFormReg.aLNameController,
                     keyboardName: TextInputType.text,
                     labelValue: 'Last Name',
                   ),
@@ -112,17 +113,17 @@ void dispose() {
                     ],
                   ),
                   RegForm(
-                    controller: aStreetAddressController,
+                    controller: AdminFormReg.aStreetAddressController,
                     keyboardName: TextInputType.text,
                     labelValue: 'Street Address ',
                   ),
                   RegForm(
-                    controller: aCityController,
+                    controller: AdminFormReg.aCityController,
                     keyboardName: TextInputType.text,
                     labelValue: 'City',
                   ),
                   RegForm(
-                    controller: aStateController,
+                    controller: AdminFormReg.aStateController,
                     keyboardName: TextInputType.text,
                     labelValue: 'State / Province',
                   ),
@@ -137,17 +138,17 @@ void dispose() {
                     ],
                   ),
                   RegForm(
-                    controller: aEmailController,
+                    controller: AdminFormReg.aEmailController,
                     keyboardName: TextInputType.emailAddress,
                     labelValue: 'Email ',
                   ),
                   RegForm(
-                    controller: aNumber1Controller,
+                    controller: AdminFormReg.aNumber1Controller,
                     keyboardName: TextInputType.number,
                     labelValue: 'Phone Number 1',
                   ),
                   RegForm(
-                    controller: aNumber2Controller,
+                    controller: AdminFormReg.aNumber2Controller,
                     keyboardName: TextInputType.number,
                     labelValue: 'Phone Number 2',
                   ),
@@ -164,7 +165,7 @@ void dispose() {
             ],
           ),
           RegForm(
-            controller: aSpecialController,
+            controller: AdminFormReg.aSpecialController,
             keyboardName: TextInputType.text,
             labelValue: 'Specialization',
           ),
@@ -180,7 +181,7 @@ void dispose() {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2.3,
                   child: RegForm(
-                    controller: aDOBController,
+                    controller: AdminFormReg.aDOBController,
                     keyboardName: TextInputType.datetime,
                     labelValue: 'DOB: DD/MM/YYYY',
                   ),
@@ -191,7 +192,7 @@ void dispose() {
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 2.4,
                   child: RegForm(
-                    controller: aReligiouController,
+                    controller: AdminFormReg.aReligiouController,
                     keyboardName: TextInputType.text,
                     labelValue: 'Religion',
                   ),
@@ -218,7 +219,7 @@ void dispose() {
             height: 20,
           ),
           RegForm(
-            controller: aUserNameController,
+            controller: AdminFormReg.aUserNameController,
             keyboardName: TextInputType.text,
             labelValue: 'UserName ',
           ),
@@ -226,7 +227,7 @@ void dispose() {
             height: 10,
           ),
           RegForm(
-            controller: aUserNameController,
+              controller: AdminFormReg.aUserNameController,
               keyboardName: TextInputType.visiblePassword,
               labelValue: 'Password',
               lineNumber: 1),
@@ -241,7 +242,7 @@ void dispose() {
             ],
           ),
           RegForm(
-            controller: aDescriptionController,
+            controller: AdminFormReg.aDescriptionController,
             keyboardName: TextInputType.text,
             labelValue: 'Description',
             lineNumber: 3,
@@ -260,6 +261,7 @@ void dispose() {
             ),
             child: TextButton.icon(
               onPressed: () {
+              SignUpData().saveSignUp();
                 if (adminFormKey.currentState!.validate()) {}
               },
               icon: const FaIcon(
