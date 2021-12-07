@@ -7,8 +7,12 @@ import 'package:my_project/router.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Database _database = Database();
-  
-  await _database.tableGen();
+  await _database.otherReportTableGen();
+                  print(await _database.otherReportList());
+
+  // await _database.adminRegTableGen();
+  // // print('${await _database.users()}');
+  // print(await _database.adminList());
   runApp(
     const MyApp(),
   );

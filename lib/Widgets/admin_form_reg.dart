@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_project/Models/data_controller.dart';
+import 'package:my_project/Models/database_controller.dart';
+import 'package:my_project/Models/json_formatter.dart';
+import 'package:my_project/Routes/contacts.dart';
 import 'package:my_project/Widgets/form_gen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -30,6 +33,22 @@ class AdminFormReg extends StatefulWidget {
 
 class _AdminFormRegState extends State<AdminFormReg> {
   final adminFormKey = GlobalKey<FormState>();
+  late Database _database;
+
+  void adminDBinit() async {
+    _database = Database();
+    print('am here');
+    await _database.adminRegTableGen();
+    print('am here1');
+    await _database.insertAdmin(_database.adminSignUpSetch);
+    print(await _database.adminList());
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    adminDBinit();
+  }
 
   @override
   void dispose() {
@@ -227,7 +246,7 @@ class _AdminFormRegState extends State<AdminFormReg> {
             height: 10,
           ),
           RegForm(
-              controller: AdminFormReg.aUserNameController,
+              controller: AdminFormReg.aPasswordController,
               keyboardName: TextInputType.visiblePassword,
               labelValue: 'Password',
               lineNumber: 1),
@@ -260,9 +279,39 @@ class _AdminFormRegState extends State<AdminFormReg> {
               border: Border.all(width: 0.4, color: const Color(0xff9d4edd)),
             ),
             child: TextButton.icon(
-              onPressed: () {
-              SignUpData().saveSignUp();
-                if (adminFormKey.currentState!.validate()) {}
+              onPressed: () async {
+                if (adminFormKey.currentState!.validate()) {
+                  var data = SignUpData().signUpData;
+                  var adminList = await _database.adminList();
+                  int _adminId = adminList.length + 1;
+                  await _database.insertAdmin(AdminSignUp(
+                      sex: data['sex'],
+                      id: _adminId,
+                      aFirstname: data['aFirstname'],
+                      aCity: data['aCity'],
+                      ahospitalName: data['ahospitalName'],
+                      aMName: data['aMName'],
+                      aLName: data['aLName'],
+                      aSpecial: data['aSpecial'],
+                      aState: data['aState'],
+                      aStreetAddress: data['aStreetAddress'],
+                      aDOB: data['aDOB'],
+                      aNumber1: data['aNumber1'].toInt(),
+                      aNumber2: data['aNumber2'].toInt(),
+                      aReligiou: data['aReligiou'],
+                      aUserName: data['aUserName'],
+                      aPassword: data['aPassword'],
+                      aDescription: data['aDescription'],
+                      aEmail: data['aEmail']));
+                  await _database.tableGen();
+                  var list = await _database.users();
+                  int _id = list.length + 1;
+                  await _database.insert(User(
+                      id: _id,
+                      userName: AdminFormReg.aUserNameController.text,
+                      password: AdminFormReg.aPasswordController.text));
+                Navigator.pushReplacementNamed(context, adminSuccessPage);
+                }
               },
               icon: const FaIcon(
                 FontAwesomeIcons.solidHandPointRight,

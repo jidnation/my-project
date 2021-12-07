@@ -4,10 +4,29 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Database {
-  var database;
+  late final database;
   var admin1 = User(id: 2, userName: 'JidNation', password: 'kunledami0');
-
-  /// ADMIN-SECTION
+     AdminSignUp adminSignUpSetch = AdminSignUp(
+      sex: 'Male',
+      id: 1,
+      aFirstname: 'Babajide',
+      aCity: 'Akure',
+      ahospitalName: 'Primary Health Care, Enuwa, ife-central',
+      aMName: 'Damilola',
+      aLName: 'Olatunji',
+      aSpecial: 'Surveillance Officer',
+      aState: 'Ondo State',
+      aStreetAddress: '1, modakeke Street',
+      aDOB: '01/09/1995',
+      aNumber1: 08033962132,
+      aNumber2: 07069533773,
+      aReligiou: 'Christain',
+      aUserName: 'Adeola',
+      aPassword: '12345678',
+      aDescription: 'Nothing much to say about me',
+      aEmail: 'jaid1074@gmail.com');
+ 
+  /// ADMIN-SECTION (USERS).
 //Open DataBase and store the reference.
   tableGen() async {
     //Create a user and add it to the admin table
@@ -23,7 +42,7 @@ class Database {
   }
 
   //Functon to add to the table
-  Future<void> insertUser(User user) async {
+  Future<void> insert(User user) async {
     final db = await database; //creating reference to the database
 
     await db.insert(
@@ -39,7 +58,7 @@ class Database {
     final db = await database;
 
     //Query the table for all the users
-    final List<Map<String, dynamic>> maps = await db.query('selfReports');
+    final List<Map<String, dynamic>> maps = await db.query('users');
 
     //Convert the Lis<Map<sstring, dynamic>> into a List<Dog>.
     return List.generate(maps.length, (i) {
@@ -88,26 +107,26 @@ class Database {
   selfReportTableGen() async {
     //Create a user and add it to the admin table
     database = openDatabase(
-      join(await getDatabasesPath(), 'Report.db'),
+      join(await getDatabasesPath(), 'Self_Reports.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE selfReports(id INTEGER PRIMARY KEY, surname TEXT, others TEXT, address TEXT, age NUMERIC, number NUMERIC, city TEXT,state TEXT,illnessHistory TEXT,haveIdea TEXT,healthIssue TEXT,commet TEXT,otherSymptoms TEXT,sex TEXT,symptoms TEXT,)',
+          'CREATE TABLE selfReports(id INTEGER PRIMARY KEY, surname TEXT, others TEXT, address TEXT, age INTEGER, number INTEGER, city TEXT, state TEXT, illnessHistory TEXT, haveIdea TEXT, healthIssue TEXT, commet TEXT, otherSymptoms TEXT, sex TEXT, symptoms TEXT)'
         );
       },
       version: 1,
     );
+  }
 
-    //Functon to add to the table
-    Future<void> selfIReport(SelfReport sReport) async {
-      //creating reference to the database
-      final db = await database;
+  //Functon to add to the table
+  Future<void> insertSelfReport(SelfReport sReport) async {
+    //creating reference to the database
+    final db = await database;
 
-      await db.insert(
-        'selfReports',
-        sReport.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
-    }
+    await db.insert(
+      'selfReports',
+      sReport.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   //function to update data from the table
@@ -128,12 +147,12 @@ class Database {
   }
 
   //function to retrieve data from the table
-  Future<List<SelfReport>> SelfReports() async {
+  Future<List<SelfReport>> selfReport() async {
     //Get a reference to the  table
     final db = await database;
 
-    //Query the table for all the users
-    final List<Map<String, dynamic>> maps = await db.query('SelfReport');
+    //Query the table for all the reports
+    final List<Map<String, dynamic>> maps = await db.query('SelfReports');
 
     //Convert the Lis<Map<sstring, dynamic>> into a List<Dog>.
     return List.generate(maps.length, (i) {
@@ -179,17 +198,17 @@ class Database {
   otherReportTableGen() async {
     //Create a user and add it to the admin table
     database = openDatabase(
-      join(await getDatabasesPath(), 'Report.db'),
+      join(await getDatabasesPath(), 'OtherReport.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE otherReports(id INTEGER PRIMARY KEY, surname TEXT, others TEXT, address TEXT, age NUMERIC, sex TEXT, number NUMERIC, city TEXT, state TEXT, illnessHistory TEXT, pCommet TEXT, pNumber NUMERIC, pAddress TEXT, pSpecifyIllness TEXT,  pAge NUMERIC, rRelation TEXT, otherSymptoms TEXT, pSex TEXT, symptoms TEXT, pFullName TEXT)',
+          'CREATE TABLE otherReports(id INTEGER PRIMARY KEY, surname TEXT, others TEXT, address TEXT, age INTEGER, sex TEXT, number INTEGER, city TEXT, state TEXT, pFullName TEXT, pCommet TEXT, pAddress TEXT, pSpecifyIllness TEXT, rRelation TEXT, otherSymptoms TEXT, symptoms TEXT)',
         );
       },
       version: 1,
     );
-
+  }
     //Functon to add to the table
-    Future<void> OtherReports(OtherReport oReport) async {
+    Future<void> insertOtherReport(OtherReport oReport) async {
       //creating reference to the database
       final db = await database;
 
@@ -199,7 +218,7 @@ class Database {
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     }
-  }
+  
 
   //function to update data from the table
   Future<void> updateOReport(OtherReport oReport) async {
@@ -219,7 +238,7 @@ class Database {
   }
 
   //function to retrieve data from the table
-  Future<List<OtherReport>> OtherReports() async {
+  Future<List<OtherReport>> otherReportList() async {
     //Get a reference to the  table
     final db = await database;
 
@@ -237,14 +256,10 @@ class Database {
           number: maps[i]['number'],
           city: maps[i]['city'],
           state: maps[i]['state'],
-          illnessHistory: maps[i]['illnessHistory'],
           pCommet: maps[i]['pCommet'],
-          pSex: maps[i]['pSex'],
           pAddress: maps[i]['pAddress'],
           sex: maps[i]['sex'],
           pFullName: maps[i]['pFullName'],
-          pAge: maps[i]['pAge'],
-          pNumber: maps[i]['pFullName'],
           pSpecifyIllness: maps[i]['pSpecifyIllness'],
           rRelation: maps[i]['pFullName'],
           symptoms: maps[i]['symptoms'],
@@ -259,13 +274,108 @@ class Database {
 
     //Update the given user
     await db.delete(
-      'otherfReports',
+      'otherReports',
       oReport.toMap(),
 
       //Ensure that the user has matching id.
       where: 'surname = ?',
       //Passthe Dog's id as a whereArg to prevent SQL injection.
       whereArgs: [oReport.surname],
+    );
+  }
+
+  ///ADMIN-SIGNUP SECTION
+
+  //Open DataBase and store the reference.
+  adminRegTableGen() async {
+    //Create a user and add it to the admin table
+    database = openDatabase(
+      join(await getDatabasesPath(), 'AdminSignUp.db'),
+      onCreate: (db, version) {
+        return db.execute(
+          'CREATE TABLE adminReg(id INTEGER PRIMARY KEY, aFirstname TEXT, ahospitalName TEXT, aMName TEXT, aLName TEXT, aState TEXT, aCity TEXT, aSpecial TEXT, aStreetAddress TEXT, aDOB TEXT, aNumber1 INTEGER, aNumber2 INTEGER, aReligiou TEXT, aUserName TEXT, aPassword TEXT, aDescription TEXT, aEmail TEXT , sex TEXT)',
+        );
+      },
+      version: 1,
+    );
+  }
+
+  //Functon to add to the table
+  Future<void> insertAdmin(AdminSignUp adminReg) async {
+    //creating reference to the database
+    final db = await database;
+
+    await db.insert(
+      'adminReg',
+      adminReg.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  //function to update data from the table
+  Future<void> updateAdmin(AdminSignUp adminReg) async {
+    //Get a reference to the  table
+    final db = await database;
+
+    //Update the given user
+    await db.update(
+      'adminReg',
+      adminReg.toMap(),
+
+      //Ensure that the user has matching id.
+      where: 'aEmail = ?',
+      //Passthe Dog's id as a whereArg to prevent SQL injection.
+      whereArgs: [adminReg.aEmail],
+    );
+  }
+
+  //function to retrieve data from the table
+  Future<List<AdminSignUp>> adminList() async {
+    //Get a reference to the  table
+    final db = await database;
+
+    //Query the table for all the users
+    final List<Map<String, dynamic>> maps = await db.query('adminReg');
+
+    //Convert the Lis<Map<sstring, dynamic>> into a List<Dog>.
+    return List.generate(maps.length, (i) {
+      return AdminSignUp(
+        id: maps[i]['id'],
+        aFirstname: maps[i]['aFirstname'],
+        aCity: maps[i]['aCity'],
+        ahospitalName: maps[i]['ahospitalName'],
+        aMName: maps[i]['aMName'],
+        aLName: maps[i]['aLName'],
+        aSpecial: maps[i]['aSpecial'],
+        aState: maps[i]['aState'],
+        aStreetAddress: maps[i]['aStreetAddress'],
+        aDOB: maps[i]['aDOB'],
+        aNumber1: maps[i]['aNumber1'],
+        aNumber2: maps[i]['aNumber2'],
+        aReligiou: maps[i]['aReligiou'],
+        aUserName: maps[i]['aUserName'],
+        aPassword: maps[i]['aPassword'],
+        aDescription: maps[i]['aDescription'],
+        aEmail: maps[i]['aEmail'],
+        sex: maps[i]['sex'],
+      );
+    });
+  }
+
+  //function to update data from the table
+  Future<void> deleteAdmin(AdminSignUp admin) async {
+    //Get a reference to the  table
+    final db = await database;
+
+    //Update the given user
+    await db.delete(
+      'adminReg',
+      admin.toMap(),
+
+      //Ensure that the user has matching id.
+      where: 'aEmail = ?',
+      //Passthe Dog's id as a whereArg to prevent SQL injection.
+      whereArgs: [admin.aEmail],
     );
   }
 }

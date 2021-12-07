@@ -15,13 +15,26 @@ class _SignInPageState extends State<SignInPage> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final _signInKey = GlobalKey<FormState>();
+  late Database _database;
+  late List<User> registeredUsers;
+
+  void dbIniti() async {
+    _database = Database();
+    await _database.tableGen();
+    registeredUsers = await _database.users();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    dbIniti();
+  }
 
   @override
   Widget build(BuildContext context) {
     final double wid = MediaQuery.of(context).size.width;
     final double hei = MediaQuery.of(context).size.height;
 
-    Database _database = Database();
     var passwordSnackBar = SnackBar(
       elevation: 0,
       behavior: SnackBarBehavior.floating,
@@ -130,10 +143,6 @@ class _SignInPageState extends State<SignInPage> {
                             ),
                             child: TextButton.icon(
                               onPressed: () async {
-                                await _database.tableGen();
-                                List<User> registeredUsers;
-
-                                registeredUsers = await _database.users();
                                 if (_signInKey.currentState!.validate()) {
                                   for (int i = 0;
                                       i < registeredUsers.length;

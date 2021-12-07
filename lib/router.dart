@@ -4,8 +4,9 @@ import 'package:my_project/Routes/contacts.dart';
 import 'package:my_project/Routes/home_page.dart';
 import 'package:my_project/Routes/report_page.dart';
 import 'package:my_project/Routes/sign_in.dart';
+import 'package:my_project/Routes/sing_up_done.dart';
 import 'package:my_project/Routes/sing_up_page.dart';
-import 'package:my_project/Routes/success_page.dart';
+import 'package:my_project/Routes/reporting_done.dart';
 
 class Routing {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -28,6 +29,10 @@ class Routing {
       case reportingPage:
         {
           return MaterialPageRoute(builder: (_) => const ReportingPage());
+        }
+        case adminSuccessPage:
+        {
+          return MaterialPageRoute(builder: (_) => const AdminSuccessPage());
         }
 
       case adminPage:

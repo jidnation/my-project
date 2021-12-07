@@ -20,21 +20,21 @@ class User {
 }
 
 class SelfReport {
-  final String? id;
-  final String surname;
-  final String others;
-  final String address;
-  final String age;
-  final String number;
-  final String city;
-  final String state;
-  final String illnessHistory;
+  final int? id;
+  final String? surname;
+  final String? others;
+  final String? address;
+  final String? age;
+  final String? number;
+  final String? city;
+  final String? state;
+  final String? illnessHistory;
   final String? haveIdea;
   final String? healthIssue;
-  final String commet;
-  final String otherSymptoms;
-  final String symptoms;
-  final String sex;
+  final String? commet;
+  final String? otherSymptoms;
+  final String? symptoms;
+  final String? sex;
 
   SelfReport(
       {this.id,
@@ -65,6 +65,7 @@ class SelfReport {
       'state': state,
       'illnessHistory': illnessHistory,
       'haveIdea': haveIdea,
+      'healthIssue': healthIssue,
       'commet': commet,
       'otherSymptoms': otherSymptoms,
       'symptoms': symptoms,
@@ -74,33 +75,31 @@ class SelfReport {
 
   @override
   String toString() {
-    return 'SelfReport{ id : $id, surname : $surname, others : $others, address : $address, age : $age, number : $number, city : $city, state : $state, illnessHistory : $illnessHistory,haveIdea : $haveIdea, commet : $commet, otherSymptoms : $otherSymptoms, sex : $sex,  symptoms : $symptoms}';
+    return 'SelfReport{ id : $id, surname : $surname, healthIssue : $healthIssue, others : $others, address : $address, age : $age, number : $number, city : $city, state : $state, illnessHistory : $illnessHistory,haveIdea : $haveIdea, commet : $commet, otherSymptoms : $otherSymptoms, sex : $sex,  symptoms : $symptoms}';
   }
 }
 
 class OtherReport {
-  final String? id;
-  final String surname;
-  final String others;
-  final String address;
-  final String city;
-  final String sex;
-  final String state;
-  final String age;
-  final String number;
-  final String? illnessHistory;
-  final String pCommet;
-  final String pSpecifyIllness;
-  final String rRelation;
-  final String pAge;
-  final String pSex;
-  final String pNumber;
-  final String pAddress;
-  final String pFullName;
-  final String? otherSymptoms;
-  final String symptoms;
+  final int? id;
+  final String? surname;
+  final String? others;
+  final String? address;
+  final String? city;
+  final String? sex;
+  final String? state;
+  final int? age;
+  final int? number;
+  final String? pCommet;
+  final String? pSpecifyIllness;
+  final String? rRelation;
+  final String? pAddress;
+  final String? pFullName;
+  final String?  otherSymptoms;
+  final String? symptoms;
 
-  OtherReport({required this.otherSymptoms,  required this.symptoms, 
+  OtherReport(
+      {required this.otherSymptoms,
+      required this.symptoms,
       required this.id,
       required this.surname,
       required this.others,
@@ -110,34 +109,27 @@ class OtherReport {
       required this.state,
       required this.age,
       required this.number,
-      required this.illnessHistory,
       required this.pCommet,
       required this.pSpecifyIllness,
       required this.rRelation,
-      required this.pAge,
-      required this.pSex,
-      required this.pNumber,
       required this.pAddress,
-      required this.pFullName, otherSymptom});
+      required this.pFullName,
+      otherSymptom});
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'surname': surname,
-      'other': others,
+      'others': others,
       'address': address,
       'city': city,
       'sex': sex,
       'state': state,
       'age': age,
       'number': number,
-      'illnessHistory': illnessHistory,
       'pcommet': pCommet,
       'pSpecifyIllness': pSpecifyIllness,
       'rRelation': rRelation,
-      'pAge': pAge,
-      'pSex': pSex,
-      'pNumber': pNumber,
       'pAddress': pAddress,
       'pFullName': pFullName,
       'otherSymptoms': otherSymptoms,
@@ -147,6 +139,74 @@ class OtherReport {
 
   @override
   String toString() {
-    return 'OtherReport{ id: $id, surname: $surname, symptoms : $symptoms, otherSymptoms : $otherSymptoms, other: $others, address: $address, city: $city, sex: $sex, state: $state, age: $age, number: $number, illnessHistory: $illnessHistory, pcommet: $pCommet, pSpecifyIllness: $pSpecifyIllness, rRelation: $rRelation, pAge: $pAge, pSex: $pSex, pNumber: $pNumber, pAddress: $pAddress, pFullName: $pFullName }';
+    return 'OtherReport{ id: $id, surname: $surname, symptoms : $symptoms, otherSymptoms : $otherSymptoms, other: $others, address: $address, city: $city, sex: $sex, state: $state, age: $age, number: $number, pcommet: $pCommet, pSpecifyIllness: $pSpecifyIllness, rRelation: $rRelation, pAddress: $pAddress, pFullName: $pFullName }';
+  }
+}
+
+class AdminSignUp {
+  final int? id;
+  final String aFirstname;
+  final String aCity;
+  final String ahospitalName;
+  final String aMName;
+  final String aLName;
+  final String aSpecial;
+  final String aState;
+  final String aStreetAddress;
+  final String aDOB;
+  final int aNumber1;
+  final int aNumber2;
+  final String aReligiou;
+  final String aUserName;
+  final String aPassword;
+  final String aDescription;
+  final String aEmail;
+  final String sex;
+
+  AdminSignUp({ required this.sex, 
+      required this.id,
+      required this.aFirstname,
+      required this.aCity,
+      required this.ahospitalName,
+      required this.aMName,
+      required this.aLName,
+      required this.aSpecial,
+      required this.aState,
+      required this.aStreetAddress,
+      required this.aDOB,
+      required this.aNumber1,
+      required this.aNumber2,
+      required this.aReligiou,
+      required this.aUserName,
+      required this.aPassword,
+      required this.aDescription,
+      required this.aEmail});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'aFirstname': aFirstname,
+      'aCity': aCity,
+      'ahospitalName': ahospitalName,
+      'aMName': aMName,
+      'aLName': aLName,
+      'aSpecial': aSpecial,
+      'aState': aState,
+      'aStreetAddress': aStreetAddress,
+      'aDOB': aDOB,
+      'aNumber1': aNumber1,
+      'aNumber2': aNumber2,
+      'aReligiou': aReligiou,
+      'aUserName': aUserName,
+      'aPassword': aPassword,
+      'aDescription': aDescription,
+      'aEmail': aEmail,
+      'sex': sex,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'AdminSingUp{ id: $id, aFirstname :aFirstname, aCity : $aCity, ahospitalName : $ahospitalName, aMName : $aMName, aLName : $aLName, aSpecial : $aSpecial, aState : $aState, aStreetAddress : $aStreetAddress, aDOB : $aDOB, aNumber1 : $aNumber1, aNumber2 : $aNumber2, aReligiou : $aReligiou, aUserName : $aUserName, aPassword : $aPassword, aDescription : $aDescription, aEmail : $aEmail , sex : $sex };}';
   }
 }

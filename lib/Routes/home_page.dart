@@ -12,14 +12,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xffe0aaff),
-      body: ListView(
-        children: const [
-          // Text(context.select<FileController, String>((controller) => controller.user.userName)),
-          CarouselView(),
-          LowerPart(),
-        ],
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        backgroundColor: const Color(0xffe0aaff),
+        body: ListView(
+          children: const [
+            // Text(context.select<FileController, String>((controller) => controller.user.userName)),
+            CarouselView(),
+            LowerPart(),
+          ],
+        ),
       ),
     );
   }

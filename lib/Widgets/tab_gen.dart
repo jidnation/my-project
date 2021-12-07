@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_project/Models/configurations.dart';
 import 'package:my_project/Models/data_controller.dart';
+import 'package:my_project/Models/database_controller.dart';
+import 'package:my_project/Models/json_formatter.dart';
 import 'package:my_project/Routes/contacts.dart';
+import 'package:my_project/Routes/report_page.dart';
 import 'package:my_project/Widgets/form_gen.dart';
 
 class SelfWidget extends StatefulWidget {
@@ -19,9 +22,23 @@ class SelfWidget extends StatefulWidget {
 }
 
 class _SelfWidgetState extends State<SelfWidget> {
-  List<dynamic> valueList = [];
+  late Database _database;
+
+  void dbIniti() async {
+    _database = Database();
+    await _database.selfReportTableGen();
+    // await _database.otherReportTableGen();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    dbIniti();
+  }
+
   @override
   void dispose() {
+    dbIniti();
     // SelfWidget.commentController.dispose();
     // SelfWidget.healthIssuesController.dispose();
     // SelfWidget.nameGuessingController.dispose();
@@ -32,6 +49,24 @@ class _SelfWidgetState extends State<SelfWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final double hei = MediaQuery.of(context).size.height;
+
+    var snackBar = SnackBar(
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      margin: EdgeInsets.only(bottom: hei * 0.87),
+      backgroundColor: Colors.red.shade400,
+      duration: const Duration(seconds: 2),
+      padding: const EdgeInsets.all(20),
+      content: const Text('Symptoms is required!',
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Poppins',
+              letterSpacing: 1)),
+    );
+
     return Column(children: [
       Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
@@ -103,21 +138,39 @@ class _SelfWidgetState extends State<SelfWidget> {
       ),
       const Spacer(),
       GestureDetector(
-        child: const Button(length: 150, text: 'SUBMIT'),
-        onTap: () {
-          if (widget.keyValue.currentState!.validate()) {
-            Navigator.pushNamed(context, successPage);
-          }
-            ReportData().saveReportData();
-          print("fail!");
-        },
-      ),
+          child: const Button(length: 150, text: 'SUBMIT'),
+          onTap: () async {
+            List<String?> _symptoms = SymptomsCheckBox.symptoms;
+            Map<String, dynamic> data = ReportData().selfReportData;
+            if (SymptomsCheckBox.symptoms.isNotEmpty) {
+              if (widget.keyValue.currentState!.validate()) {
+                var reportNum = await _database.selfReport();
+                await _database.insertSelfReport(SelfReport(
+                    id: reportNum.length + 1,
+                    surname: data['surname'],
+                    others: data['others'],
+                    address: data['address'],
+                    age: data['age'],
+                    number: data['number'],
+                    city: data['city'],
+                    state: data['state'],
+                    illnessHistory: data['illnessHistory'],
+                    commet: data['commet'],
+                    otherSymptoms: data['otherSymptoms'],
+                    sex: data['sex'],
+                    symptoms: _symptoms.join(',')));
+                Navigator.pushReplacementNamed(context, successPage);
+              }
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              return null;
+            }
+          }),
       const Spacer(
         flex: 2,
       ),
     ]);
   }
-
 }
 
 class OthersWidget extends StatefulWidget {
@@ -143,8 +196,22 @@ class OthersWidget extends StatefulWidget {
 
 class _OthersWidgetState extends State<OthersWidget>
     with SingleTickerProviderStateMixin {
+  late Database _database;
+
+  void dbIniti() async {
+    _database = Database();
+    await _database.otherReportTableGen();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    dbIniti();
+  }
+
   @override
   void dispose() {
+    dbIniti();
     // OthersWidget.pCommetController.dispose();
     // OthersWidget.pSpecifyIllnessController.dispose();
     // OthersWidget.rRelationController.dispose();
@@ -158,6 +225,24 @@ class _OthersWidgetState extends State<OthersWidget>
   String? _sex;
   @override
   Widget build(BuildContext context) {
+    final double hei = MediaQuery.of(context).size.height;
+
+    var snackBar = SnackBar(
+      elevation: 0,
+      behavior: SnackBarBehavior.floating,
+      margin: EdgeInsets.only(bottom: hei * 0.87),
+      backgroundColor: Colors.red.shade400,
+      duration: const Duration(seconds: 2),
+      padding: const EdgeInsets.all(20),
+      content: const Text('Symptoms is required!',
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Poppins',
+              letterSpacing: 1)),
+    );
+
     return Container(
       margin: const EdgeInsets.only(top: 8),
       child: Column(children: [
@@ -179,26 +264,27 @@ class _OthersWidgetState extends State<OthersWidget>
                 controller: OthersWidget.pAddressController,
                 labelValue: 'Address',
                 keyboardName: TextInputType.text),
-            SexRow(sex: _sex),
-            Row(children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 2.15,
-                child: RegForm(
-                    controller: OthersWidget.pNumberController,
-                    labelValue: 'Phone Number',
-                    keyboardName: TextInputType.number),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 2.9,
-                child: RegForm(
-                    controller: OthersWidget.pAgeController,
-                    labelValue: ' Age',
-                    keyboardName: TextInputType.number),
-              )
-            ]),
+            // SexRow(sex: _sex),
+            // RegForm(
+            //     controller: OthersWidget.pNumberController,
+            //     labelValue: 'Phone Number',
+            //     keyboardName: TextInputType.number),
+            // Row(children: [
+            //   SizedBox(
+            //     child: ,
+            //     width: MediaQuery.of(context).size.width / 2.15,
+            //   ),
+            //   const SizedBox(
+            //     width: 15,
+            //   ),
+            //   SizedBox(
+            //     width: MediaQuery.of(context).size.width / 2.9,
+            //     child: RegForm(
+            //         controller: OthersWidget.pAgeController,
+            //         labelValue: ' Age',
+            //         keyboardName: TextInputType.text),
+            //   )
+            // ]),
             const SizedBox(
               height: 10,
             ),
@@ -254,16 +340,39 @@ class _OthersWidgetState extends State<OthersWidget>
           ]),
         ),
         GestureDetector(
-          child: const Button(length: 150, text: 'SUBMIT'),
-          onTap: () {
-            if (widget.keyValue.currentState!.validate()) {
-              print('Done2');
-              Navigator.pushNamed(context, successPage);
-            }
-            print('fail2');
-            ReportData().saveReportData2();
-          },
-        ),
+            child: const Button(length: 150, text: 'SUBMIT'),
+            onTap: () async {
+              List<String?> _symptoms = SymptomsCheckBox.symptoms;
+              if (SymptomsCheckBox.symptoms.isNotEmpty) {
+                if (widget.keyValue.currentState!.validate()) {
+                  var reportNum = await _database.otherReportList();
+                  await _database.insertOtherReport(OtherReport(
+                    symptoms: _symptoms.join(','),
+                    id: reportNum.length + 1,
+                    surname: ReportingPage.surnameController.text,
+                    others: ReportingPage.othersController.text,
+                    address: ReportingPage.addressController.text,
+                    city: ReportingPage.cityController.text,
+                    sex: RadioButton.sexValue,
+                    state: ReportingPage.stateController.text,
+                    age: ReportingPage.ageController.text as int,
+                    number: ReportingPage.numberController.text as int,
+                    otherSymptoms: SymptomsWidget.otherSymptomsController.text,
+                    pCommet: OthersWidget.pCommetController.text,
+                    pSpecifyIllness:
+                        OthersWidget.pSpecifyIllnessController.text,
+                    rRelation: OthersWidget.rRelationController.text,
+                    pAddress: OthersWidget.pAddressController.text,
+                    pFullName: OthersWidget.pFullNameController.text,
+                  ));
+                  print(reportNum);
+                  Navigator.pushReplacementNamed(context, successPage);
+                }
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                return null;
+              }
+            }),
       ]),
     );
   }

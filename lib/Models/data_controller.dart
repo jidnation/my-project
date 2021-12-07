@@ -5,7 +5,7 @@ import 'package:my_project/Widgets/form_gen.dart';
 import 'package:my_project/Widgets/tab_gen.dart';
 
 class ReportData {
-  Map<String, dynamic> reportData = {};
+  Map<String, dynamic> selfReportData = {};
   String? surname;
   String? others;
   String? address;
@@ -33,6 +33,13 @@ class ReportData {
     city = ReportingPage.cityController.text;
     state = ReportingPage.stateController.text;
     age = ReportingPage.ageController.text;
+    otherSymptoms = SymptomsWidget.otherSymptomsController.text;
+    number = ReportingPage.numberController.text;
+    commet = SelfWidget.commentController.text;
+    healthIssue = SelfWidget.healthIssuesController.text;
+    haveIdea = SelfWidget.nameGuessingController.text;
+    illnessHistory = SelfWidget.illnessHistoryController.text;
+
     var surnameStorage = {'surname': surname};
     var othersStorage = {'others': others};
     var addressStorage = {'address': address};
@@ -46,27 +53,46 @@ class ReportData {
     var commetStorage = {'commet': commet};
     var otherSymptomsStorage = {'otherSymptoms': otherSymptoms};
     var sex = {'sex': RadioButton.sexValue};
-    var symptomsChecked = {'symptoms': SymptomsCheckBox.symptoms};
+    // var symptomsChecked = {'symptoms': SymptomsCheckBox.symptoms};
 
-    reportData.addAll(surnameStorage);
-    reportData.addAll(othersStorage);
-    reportData.addAll(addressStorage);
-    reportData.addAll(cityStorage);
-    reportData.addAll(stateStorage);
-    reportData.addAll(ageStorage);
-    reportData.addAll(numberStorage);
-    reportData.addAll(illnessHistoryStorage);
-    reportData.addAll(haveIdeaStorage);
-    reportData.addAll(healthIssueStorage);
-    reportData.addAll(commetStorage);
-    reportData.addAll(otherSymptomsStorage);
-    reportData.addAll(sex);
-    reportData.addAll(symptomsChecked);
+    selfReportData.addAll(surnameStorage);
+    selfReportData.addAll(othersStorage);
+    selfReportData.addAll(addressStorage);
+    selfReportData.addAll(cityStorage);
+    selfReportData.addAll(stateStorage);
+    selfReportData.addAll(ageStorage);
+    selfReportData.addAll(numberStorage);
+    selfReportData.addAll(illnessHistoryStorage);
+    selfReportData.addAll(haveIdeaStorage);
+    selfReportData.addAll(healthIssueStorage);
+    selfReportData.addAll(commetStorage);
+    selfReportData.addAll(otherSymptomsStorage);
+    selfReportData.addAll(sex);
 
-    print(reportData);
+    print(selfReportData);
+    // print(selfReportData['symptoms']);
   }
+}
 
-  void saveReportData2() {
+class OtherReportF {
+  late Map<String, dynamic> otherReportData;
+
+  String? surname;
+  String? others;
+  String? address;
+  String? city;
+  String? state;
+  String? age;
+  String? number;
+  String? otherSymptoms;
+  String? pCommet;
+  String? pSpecifyIllness;
+  String? rRelation;
+  String? pAddress;
+  String? pFullName;
+  // String? pNumber;
+
+  void saveReportData() {
     surname = ReportingPage.surnameController.text;
     others = ReportingPage.othersController.text;
     address = ReportingPage.addressController.text;
@@ -74,16 +100,11 @@ class ReportData {
     state = ReportingPage.stateController.text;
     age = ReportingPage.ageController.text;
     number = ReportingPage.numberController.text;
-    illnessHistory = SelfWidget.illnessHistoryController.text;
-    haveIdea = SelfWidget.nameGuessingController.text;
-    healthIssue = SelfWidget.healthIssuesController.text;
-    commet = SelfWidget.commentController.text;
-    // otherSymptoms = SymptomsWidget.otherSymptomsController.text;
+    otherSymptoms = SymptomsWidget.otherSymptomsController.text;
     pCommet = OthersWidget.pCommetController.text;
     pSpecifyIllness = OthersWidget.pSpecifyIllnessController.text;
     rRelation = OthersWidget.rRelationController.text;
-    pAge = OthersWidget.pAgeController.text;
-    pNumber = OthersWidget.pNumberController.text;
+    // pNumber = OthersWidget.pNumberController.text;
     pAddress = OthersWidget.pAddressController.text;
     pFullName = OthersWidget.pFullNameController.text;
 
@@ -92,34 +113,36 @@ class ReportData {
     var addressStorage = {'address': address};
     var cityStorage = {'city': city};
     var stateStorage = {'state': state};
+    var ageStorage = {'age': age};
+    var numberStorage = {'number': number};
     var otherSymptomsStorage = {'otherSymptoms': otherSymptoms};
     var sex = {'sex': RadioButton.sexValue};
     var symptomsChecked = {'symptoms': SymptomsCheckBox.symptoms};
     var pCommetStorage = {'pCommet': pCommet};
     var pSpecifyIllnessStorage = {'pSpecifyIllness': pSpecifyIllness};
     var rRelationStorage = {'rRelation': rRelation};
-    var pAgeStorage = {'pAge': pAge};
-    var pNumberStorage = {'pNumber': pNumber};
+    // var pNumberStorage = {'pNumber': pNumber};
     var pAddressStorage = {'pAddress': pAddress};
     var pFullNameStorage = {'pFullName': pFullName};
 
-    reportData.addAll(surnameStorage);
-    reportData.addAll(othersStorage);
-    reportData.addAll(addressStorage);
-    reportData.addAll(cityStorage);
-    reportData.addAll(stateStorage);
-    reportData.addAll(otherSymptomsStorage);
-    reportData.addAll(sex);
-    reportData.addAll(symptomsChecked);
-    reportData.addAll(pCommetStorage);
-    reportData.addAll(pSpecifyIllnessStorage);
-    reportData.addAll(rRelationStorage);
-    reportData.addAll(pAgeStorage);
-    reportData.addAll(pNumberStorage);
-    reportData.addAll(pAddressStorage);
-    reportData.addAll(pFullNameStorage);
+    otherReportData.addAll(surnameStorage);
+    otherReportData.addAll(othersStorage);
+    otherReportData.addAll(addressStorage);
+    otherReportData.addAll(cityStorage);
+    otherReportData.addAll(stateStorage);
+    otherReportData.addAll(otherSymptomsStorage);
+    otherReportData.addAll(sex);
+    otherReportData.addAll(ageStorage);
+    otherReportData.addAll(numberStorage);
+    otherReportData.addAll(symptomsChecked);
+    otherReportData.addAll(pCommetStorage);
+    otherReportData.addAll(pSpecifyIllnessStorage);
+    otherReportData.addAll(rRelationStorage);
+    // otherReportData.addAll(pNumberStorage);
+    otherReportData.addAll(pAddressStorage);
+    otherReportData.addAll(pFullNameStorage);
 
-    print(reportData);
+    print(otherReportData);
   }
 }
 
@@ -134,6 +157,7 @@ class SignUpData {
   String? aState;
   String? aStreetAddress;
   String? aDOB;
+  String? sex;
   String? aNumber1;
   String? aNumber2;
   String? aReligiou;
@@ -176,6 +200,7 @@ class SignUpData {
     var aPasswordStorage = {'aPassword': aPassword};
     var aDescriptionStorage = {'aDescription': aDescription};
     var aEmailStorage = {'aEmail': aEmail};
+    var sex = {'sex': RadioButton.sexValue};
 
     signUpData.addAll(aFirstnameStorage);
     signUpData.addAll(aCityStorage);
@@ -193,6 +218,7 @@ class SignUpData {
     signUpData.addAll(aPasswordStorage);
     signUpData.addAll(aDescriptionStorage);
     signUpData.addAll(aEmailStorage);
+    signUpData.addAll(sex);
 
     print(signUpData);
   }
