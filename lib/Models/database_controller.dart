@@ -1,12 +1,14 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, must_be_immutable
+// import 'package:flutter/material.dart';
 import 'package:my_project/Models/json_formatter.dart';
+import 'package:my_project/Routes/admin_page.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Database {
   late final database;
   var admin1 = User(id: 2, userName: 'JidNation', password: 'kunledami0');
-     AdminSignUp adminSignUpSetch = AdminSignUp(
+  AdminSignUp adminSignUpSetch = AdminSignUp(
       sex: 'Male',
       id: 1,
       aFirstname: 'Babajide',
@@ -25,7 +27,7 @@ class Database {
       aPassword: '12345678',
       aDescription: 'Nothing much to say about me',
       aEmail: 'jaid1074@gmail.com');
- 
+
   /// ADMIN-SECTION (USERS).
 //Open DataBase and store the reference.
   tableGen() async {
@@ -110,8 +112,7 @@ class Database {
       join(await getDatabasesPath(), 'Self_Reports.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE selfReports(id INTEGER PRIMARY KEY, surname TEXT, others TEXT, address TEXT, age INTEGER, number INTEGER, city TEXT, state TEXT, illnessHistory TEXT, haveIdea TEXT, healthIssue TEXT, commet TEXT, otherSymptoms TEXT, sex TEXT, symptoms TEXT)'
-        );
+            'CREATE TABLE selfReports(id INTEGER PRIMARY KEY, surname TEXT, others TEXT, address TEXT, age INTEGER, number INTEGER, city TEXT, state TEXT, illnessHistory TEXT, haveIdea TEXT, healthIssue TEXT, commet TEXT, otherSymptoms TEXT, sex TEXT, symptoms TEXT)');
       },
       version: 1,
     );
@@ -119,6 +120,7 @@ class Database {
 
   //Functon to add to the table
   Future<void> insertSelfReport(SelfReport sReport) async {
+    final _reporting = Reporting();
     //creating reference to the database
     final db = await database;
 
@@ -127,6 +129,7 @@ class Database {
       sReport.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    await _reporting.reportGetter(sReport);
   }
 
   //function to update data from the table
@@ -163,6 +166,7 @@ class Database {
         address: maps[i]['address'],
         age: maps[i]['age'],
         number: maps[i]['number'],
+        healthIssue: maps[i]['healthIssue'],
         city: maps[i]['city'],
         state: maps[i]['state'],
         illnessHistory: maps[i]['illnessHistory'],
@@ -176,21 +180,21 @@ class Database {
   }
 
   //function to update data from the table
-  Future<void> deleteSReport(SelfReport sReport) async {
-    //Get a reference to the  table
-    final db = await database;
+  // Future<void> deleteSReport(SelfReport sReport) async {
+  //   //Get a reference to the  table
+  //   final db = await database;
 
-    //Update the given user
-    await db.delete(
-      'selfReports',
-      sReport.toMap(),
+  //   //Update the given user
+  //   await db.delete(
+  //     'selfReports',
+  //     sReport.toMap(),
 
-      //Ensure that the user has matching id.
-      where: 'surname = ?',
-      //Passthe Dog's id as a whereArg to prevent SQL injection.
-      whereArgs: [sReport.surname],
-    );
-  }
+  //     //Ensure that the user has matching id.
+  //     where: 'id = sReport.id',
+  //     // //Passthe users id as a whereArg to prevent SQL injection.
+  //     whereArgs: [{sReport.id}],
+  //   );
+  // }
 
   ///OTHER-REPORT SECTION
 
@@ -207,18 +211,18 @@ class Database {
       version: 1,
     );
   }
-    //Functon to add to the table
-    Future<void> insertOtherReport(OtherReport oReport) async {
-      //creating reference to the database
-      final db = await database;
 
-      await db.insert(
-        'otherReports',
-        oReport.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
-    }
-  
+  //Functon to add to the table
+  Future<void> insertOtherReport(OtherReport oReport) async {
+    //creating reference to the database
+    final db = await database;
+
+    await db.insert(
+      'otherReports',
+      oReport.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
 
   //function to update data from the table
   Future<void> updateOReport(OtherReport oReport) async {
@@ -378,4 +382,79 @@ class Database {
       whereArgs: [admin.aEmail],
     );
   }
+
+  // For Admin Notification
+  //Open DataBase and store the reference.
+  notificationTable() async {
+    //Create a user and add it to the admin table
+    database = openDatabase(
+      join(await getDatabasesPath(), 'NotificationTable.db'),
+      onCreate: (db, version) {
+        return db.execute(
+          'CREATE TABLE dataValues(id INTEGER PRIMARY KEY, read INTEGER, unread INTEGER)',
+        );
+      },
+      version: 1,
+    );
+  }
+
+  //Functon to add to the table
+  Future<void> notiInsert(Values _values) async {
+    final db = await database; //creating reference to the database
+
+    await db.insert(
+      'dataValues',
+      _values.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  //function to retrieve data from the table
+  Future<List<Values>> currentValues() async {
+    //Get a reference to the  table
+    final db = await database;
+
+    //Query the table for all the users
+    final List<Map<String, dynamic>> maps = await db.query('dataValues');
+
+    //Convert the Lis<Map<sstring, dynamic>> into a List<Dog>.
+    return List.generate(maps.length, (i) {
+      return Values(
+        id: maps[i]['id'],
+        unread: maps[i]['unread'],
+        read: maps[i]['read'],
+      );
+    });
+  }
+
+  //function to update data from the table
+  Future<void> updateValues(Values _value) async {
+    //Get a reference to the  table
+    final db = await database;
+
+    //Update the given user
+    await db.update(
+      'dataValues',
+      _value.toMap(),
+
+      //Ensure that the user has matching id.
+      where: 'id = ?',
+      //Passthe Dog's id as a whereArg to prevent SQL injection.
+      whereArgs: [_value.id],
+    );
+  }
+
+  // Future<void> userDeleter(String user) async {
+  //   //Get a reference to the database
+  //   final db = await database;
+
+  //   //Remove the Dog from the database.
+  //   await db.delete(
+  //     'users',
+  //     //Use a where  clause to delete a specific dog.
+  //     where: 'userName = ?',
+  //     //Pass the Dog's id as a whereArg to prevent SQL injection.
+  //     whereArgs: [user],
+  //   );
+  // }
 }

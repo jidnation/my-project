@@ -37,11 +37,8 @@ class _AdminFormRegState extends State<AdminFormReg> {
 
   void adminDBinit() async {
     _database = Database();
-    print('am here');
     await _database.adminRegTableGen();
-    print('am here1');
-    await _database.insertAdmin(_database.adminSignUpSetch);
-    print(await _database.adminList());
+    // await _database.insertAdmin(_database.adminSignUpSetch);
   }
 
   @override

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:my_project/Routes/contacts.dart';
 
 class ContainerBuilder extends StatelessWidget {
   final IconData icon;
   final String label;
   final Color colorName;
-  const ContainerBuilder({Key? key, required this.icon, required this.label, required this.colorName})
+  const ContainerBuilder(
+      {Key? key,
+      required this.icon,
+      required this.label,
+      required this.colorName})
       : super(key: key);
 
   @override
@@ -45,52 +50,95 @@ class ContainerBuilder extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class IconContainerBuilder extends StatelessWidget {
   final String icon;
   final String label;
   final Color colorName;
+  int? notify;
 
-  const IconContainerBuilder(
-      {Key? key, required this.icon, required this.label, required this.colorName})
+  IconContainerBuilder(
+      {Key? key,
+      this.notify,
+      required this.icon,
+      required this.label,
+      required this.colorName})
       : super(key: key);
+
+  ////
+  Widget notification() {
+    if (notify != null) {
+      return Positioned(
+        top: 0,
+        right: 0,
+        child: Container(
+          padding: const EdgeInsets.all(2),
+          width: 18,
+          height: 18,
+          decoration: BoxDecoration(
+            color: Colors.red.shade700,
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: Center(
+            child: Text('$notify',
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontFamily: 'Lobster',
+                    fontWeight: FontWeight.bold)),
+          ),
+        ),
+      );
+    }
+    return Container();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Container(
-        width: 70,
-        height: 70,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: Colors.grey.shade200,
-              width: 1,
+    // bool newMessage = false;
+    return InkWell(
+        child: Column(children: [
+          Stack(children: [
+            Container(
+              width: 70,
+              height: 70,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: Colors.grey.shade200,
+                    width: 1,
+                  ),
+                  color: colorName.withOpacity(0.2)),
+              child: Center(
+                child: SvgPicture.asset(icon,
+                    width: 50, color: Colors.grey.shade800, fit: BoxFit.cover),
+              ),
             ),
-            color: colorName.withOpacity(0.2)),
-        child: Center(
-          child: SvgPicture.asset(icon,
-              width: 50, color: Colors.grey.shade800, fit: BoxFit.cover),
-        ),
-      ),
-      const SizedBox(
-        height: 5,
-      ),
-      Text(
-        label,
-        style: TextStyle(
-          fontFamily: 'Poppins',
-          fontWeight: FontWeight.w800,
-          color: Colors.grey.shade900,
-        ),
-      ),
-    ]);
+            notification(),
+          ]),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            label,
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w800,
+              color: Colors.grey.shade900,
+            ),
+          ),
+        ]),
+        onTap: () {
+          print('Clicked');
+        });
   }
 }
 
 class NotificationHeader extends StatelessWidget {
   final String name;
   const NotificationHeader({
-    Key? key, required this.name,
+    Key? key,
+    required this.name,
   }) : super(key: key);
 
   @override
@@ -102,49 +150,28 @@ class NotificationHeader extends StatelessWidget {
           decoration: BoxDecoration(
               color: const Color(0xff5a289a),
               borderRadius: BorderRadius.circular(50)),
-          child: const Center(
-            child: FaIcon(
-              FontAwesomeIcons.hospitalUser,
-              color: Colors.white,
-              size: 22,
+          child: Center(
+            child: InkWell(
+              onTap: () => Navigator.pushReplacementNamed(context, homePage),
+              child: const FaIcon(
+                FontAwesomeIcons.hospitalUser,
+                color: Colors.white,
+                size: 22,
+              ),
             ),
           )),
-           Text('Welcome $name!', 
-           style: TextStyle(
-             color: Colors.grey.shade800,
-             fontFamily: 'Courgette',
-             fontSize: 16,
-             letterSpacing: 1,
-             fontWeight: FontWeight.w600
-           )
-           ),
-      Stack(children: [
-        const FaIcon(
-          FontAwesomeIcons.bell,
-          size: 32,
-        ),
-        Positioned(
-          top: 0,
-          right: 0,
-          child: Container(
-            padding: const EdgeInsets.all(2),
-            width: 18,
-            height: 18,
-            decoration: BoxDecoration(
-              color: Colors.red.shade700,
-              borderRadius: BorderRadius.circular(50),
-            ),
-            child: const Center(
-              child: Text('10',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontFamily: 'Lobster',
-                      fontWeight: FontWeight.bold)),
-            ),
-          ),
-        ),
-      ])
+      Text('Welcome $name!',
+          style: TextStyle(
+              color: Colors.grey.shade800,
+              fontFamily: 'Courgette',
+              fontSize: 16,
+              letterSpacing: 1,
+              fontWeight: FontWeight.w600)),
+      InkWell(
+        onTap: () => Navigator.pushReplacementNamed(context, signInPage),
+        child: const FaIcon(FontAwesomeIcons.powerOff,
+            size: 32, color: Colors.red),
+      )
     ]);
   }
 }

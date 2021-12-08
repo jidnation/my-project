@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_project/Models/configurations.dart';
-import 'package:my_project/Models/data_controller.dart';
 import 'package:my_project/Models/database_controller.dart';
 import 'package:my_project/Models/json_formatter.dart';
 import 'package:my_project/Routes/contacts.dart';
@@ -27,7 +26,6 @@ class _SelfWidgetState extends State<SelfWidget> {
   void dbIniti() async {
     _database = Database();
     await _database.selfReportTableGen();
-    // await _database.otherReportTableGen();
   }
 
   @override
@@ -141,29 +139,31 @@ class _SelfWidgetState extends State<SelfWidget> {
           child: const Button(length: 150, text: 'SUBMIT'),
           onTap: () async {
             List<String?> _symptoms = SymptomsCheckBox.symptoms;
-            Map<String, dynamic> data = ReportData().selfReportData;
             if (SymptomsCheckBox.symptoms.isNotEmpty) {
               if (widget.keyValue.currentState!.validate()) {
                 var reportNum = await _database.selfReport();
                 await _database.insertSelfReport(SelfReport(
-                    id: reportNum.length + 1,
-                    surname: data['surname'],
-                    others: data['others'],
-                    address: data['address'],
-                    age: data['age'],
-                    number: data['number'],
-                    city: data['city'],
-                    state: data['state'],
-                    illnessHistory: data['illnessHistory'],
-                    commet: data['commet'],
-                    otherSymptoms: data['otherSymptoms'],
-                    sex: data['sex'],
-                    symptoms: _symptoms.join(',')));
+                  id: reportNum.length + 1,
+                  symptoms: _symptoms.join(','),
+                  sex: RadioButton.sexValue,
+                  surname: ReportingPage.surnameController.text,
+                  others: ReportingPage.othersController.text,
+                  address: ReportingPage.addressController.text,
+                  city: ReportingPage.cityController.text,
+                  state: ReportingPage.stateController.text,
+                  age: int.parse(ReportingPage.ageController.text) ,
+                  otherSymptoms: SymptomsWidget.otherSymptomsController.text,
+                  number: int.parse(ReportingPage.numberController.text),
+                  commet: SelfWidget.commentController.text,
+                  healthIssue: SelfWidget.healthIssuesController.text,
+                  haveIdea: SelfWidget.nameGuessingController.text,
+                  illnessHistory: SelfWidget.illnessHistoryController.text,
+                ));
                 Navigator.pushReplacementNamed(context, successPage);
               }
             } else {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              return null;
+              // return Container();
             }
           }),
       const Spacer(
@@ -222,7 +222,6 @@ class _OthersWidgetState extends State<OthersWidget>
     super.dispose();
   }
 
-  String? _sex;
   @override
   Widget build(BuildContext context) {
     final double hei = MediaQuery.of(context).size.height;
@@ -365,12 +364,11 @@ class _OthersWidgetState extends State<OthersWidget>
                     pAddress: OthersWidget.pAddressController.text,
                     pFullName: OthersWidget.pFullNameController.text,
                   ));
-                  print(reportNum);
                   Navigator.pushReplacementNamed(context, successPage);
                 }
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                return null;
+                // return null;
               }
             }),
       ]),

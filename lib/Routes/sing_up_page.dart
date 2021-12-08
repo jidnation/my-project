@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:my_project/Models/database_controller.dart';
 import 'package:my_project/Widgets/admin_form_reg.dart';
 
 class SignUpPage extends StatelessWidget {

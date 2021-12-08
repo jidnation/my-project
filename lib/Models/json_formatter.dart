@@ -24,8 +24,8 @@ class SelfReport {
   final String? surname;
   final String? others;
   final String? address;
-  final String? age;
-  final String? number;
+  final int? age;
+  final int? number;
   final String? city;
   final String? state;
   final String? illnessHistory;
@@ -46,8 +46,8 @@ class SelfReport {
       required this.city,
       required this.state,
       required this.illnessHistory,
-      this.haveIdea,
-      this.healthIssue,
+      required this.haveIdea,
+      required this.healthIssue,
       required this.commet,
       required this.otherSymptoms,
       required this.sex,
@@ -94,7 +94,7 @@ class OtherReport {
   final String? rRelation;
   final String? pAddress;
   final String? pFullName;
-  final String?  otherSymptoms;
+  final String? otherSymptoms;
   final String? symptoms;
 
   OtherReport(
@@ -163,7 +163,8 @@ class AdminSignUp {
   final String aEmail;
   final String sex;
 
-  AdminSignUp({ required this.sex, 
+  AdminSignUp(
+      {required this.sex,
       required this.id,
       required this.aFirstname,
       required this.aCity,
@@ -208,5 +209,22 @@ class AdminSignUp {
   @override
   String toString() {
     return 'AdminSingUp{ id: $id, aFirstname :aFirstname, aCity : $aCity, ahospitalName : $ahospitalName, aMName : $aMName, aLName : $aLName, aSpecial : $aSpecial, aState : $aState, aStreetAddress : $aStreetAddress, aDOB : $aDOB, aNumber1 : $aNumber1, aNumber2 : $aNumber2, aReligiou : $aReligiou, aUserName : $aUserName, aPassword : $aPassword, aDescription : $aDescription, aEmail : $aEmail , sex : $sex };}';
+  }
+}
+
+class Values {
+  final int? id;
+  final int? read;
+  final int? unread;
+
+  Values({required this.id, required this.read, required this.unread});
+
+  Map<String, dynamic> toMap() {
+    return {'id': id, 'read': read, 'unread': unread};
+  }
+
+  @override
+  String toString() {
+    return 'Values{id : $id, read: $read, unread: $unread}';
   }
 }

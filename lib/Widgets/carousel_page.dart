@@ -22,7 +22,6 @@ class _CarouselViewState extends State<CarouselView> {
   @override
   Widget build(BuildContext context) {
     final double hei = MediaQuery.of(context).size.height;
-    final double wdt = MediaQuery.of(context).size.width;
 
     return CarouselSlider(
       options: CarouselOptions(

@@ -202,8 +202,8 @@ class _ReportingPageState extends State<ReportingPage>
                         ]),
                     Container(
                       constraints: const BoxConstraints(
-                        // minHeight: 100,
-                        maxHeight: 1000,
+                        minHeight: 1000,
+                        maxHeight: 1102,
                       ),
                       child:
                           TabBarView(controller: _reportTabController, children: [

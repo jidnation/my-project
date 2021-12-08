@@ -14,8 +14,6 @@ class ValidateInput extends StatelessWidget {
 
   }
 
-  static var result;
-
   String? inputChecker(String? value, TextInputType? type) {
     if (value != null || value!.isNotEmpty) {
       if (type == TextInputType.text) {
@@ -48,10 +46,6 @@ class ValidateInput extends StatelessWidget {
       } else if (type == TextInputType.datetime) {}
       // return null;
     }
-  }
-
-  static getter() {
-    return result;
   }
 
   

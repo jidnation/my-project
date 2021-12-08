@@ -35,29 +35,14 @@ class _SignInPageState extends State<SignInPage> {
     final double wid = MediaQuery.of(context).size.width;
     final double hei = MediaQuery.of(context).size.height;
 
-    var passwordSnackBar = SnackBar(
+    var snackBar = SnackBar(
       elevation: 0,
       behavior: SnackBarBehavior.floating,
-      margin: EdgeInsets.only(bottom: hei * 0.87),
+      margin: const EdgeInsets.only(bottom: 40),
       backgroundColor: Colors.red.shade400,
       duration: const Duration(seconds: 2),
       padding: const EdgeInsets.all(20),
-      content: const Text('Incorrect Password',
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-              fontFamily: 'Poppins',
-              letterSpacing: 1)),
-    );
-    var nameSnackBar = SnackBar(
-      elevation: 0,
-      behavior: SnackBarBehavior.floating,
-      margin: EdgeInsets.only(bottom: hei * 0.87),
-      backgroundColor: Colors.red.shade400,
-      duration: const Duration(seconds: 2),
-      padding: const EdgeInsets.all(20),
-      content: const Text('InValid UserName',
+      content: const Text('InValid UserName or Password',
           style: TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -144,27 +129,27 @@ class _SignInPageState extends State<SignInPage> {
                             child: TextButton.icon(
                               onPressed: () async {
                                 if (_signInKey.currentState!.validate()) {
-                                  for (int i = 0;
-                                      i < registeredUsers.length;
-                                      i++) {
-                                    if (registeredUsers[i].userName ==
-                                        userNameController.text) {
-                                      if (registeredUsers[i].password ==
-                                          passwordController.text) {
-                                        Navigator.pushNamed(context, adminPage,
-                                            arguments: userNameController.text);
-                                        return null;
-                                      } else {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(passwordSnackBar);
-                                        return null;
-                                      }
+                                  int i = 0;
+                                  while (i < registeredUsers.length) {
+                                    if ((registeredUsers[i].userName ==
+                                            userNameController.text) &&
+                                        (registeredUsers[i].password ==
+                                            passwordController.text)) {
+                                      return await Navigator
+                                          .pushReplacementNamed(
+                                              context, adminPage,
+                                              arguments: userNameController
+                                                  .text) as Future?; 
+
                                     } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(nameSnackBar);
+                                      if (i == 0) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
+                                      }
+                                      i++;
+                                      continue;
                                     }
                                   }
-                                  ;
                                 }
                               },
                               icon: Icon(
