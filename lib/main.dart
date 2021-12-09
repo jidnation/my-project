@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 // import 'package:my_project/Models/database_controller.dart';
+// import 'package:my_project/Models/database_controller.dart';
 // import 'package:my_project/Models/json_formatter.dart';
 import 'package:my_project/Routes/contacts.dart';
 import 'package:my_project/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Database _database = Database();
-  // await _database.selfReportTableGen();
   // var path = join(await getDatabasesPath(), 'Self_Reports.db');
   // await deleteDatabase(path);
   runApp(

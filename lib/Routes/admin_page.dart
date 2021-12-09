@@ -11,32 +11,39 @@ class AdminPage extends StatefulWidget {
   _AdminPageState createState() => _AdminPageState();
 }
 
+NotificationDB _notiDatabase = NotificationDB();
+SelfDatabase _selfDatabase = SelfDatabase();
+
 class Reporting {
   bool isRead = false;
 
-  final _database = Database();
   Map<String, dynamic> data = {};
 
   reportGetter(SelfReport report) async {
     data = report.toMap();
-    await _database.notificationTable();
-    await _database.currentValues().then( (value) => _database.notiInsert(
-        Values(id: 1, read: value[0].read, unread: (value[0].unread as int )+ 1)));
+    await _notiDatabase.notificationTable();
+    await _notiDatabase.currentValues().then((value) =>
+        _notiDatabase.notiInsert(Values(
+            id: 1, read: value[0].read, unread: (value[0].unread as int) + 1)));
   }
 }
 
 class _AdminPageState extends State<AdminPage> {
+  List<SelfReport> currentSelfValue = [];
+  List<Values> values = [];
   int unread = 0;
   int read = 0;
   int notice = 0;
-  final _database = Database();
 
   void initializer() async {
-    await _database.notificationTable();
-    List<Values> values = await _database.currentValues();
+    await _notiDatabase.notificationTable();
+    values = await _notiDatabase.currentValues();
     setState(() {
       notice = (values[0].unread as int) - (values[0].read as int);
     });
+    // await _selfDatabase.selfReportTableGen();
+    // currentSelfValue = await _selfDatabase.selfReport();
+    // print('from adminPage: $currentSelfValue');
   }
 
   @override
@@ -46,8 +53,13 @@ class _AdminPageState extends State<AdminPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _selfDatabase.selfDatabase().dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // final updater = Provider.of<Database>(context);
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -67,6 +79,7 @@ class _AdminPageState extends State<AdminPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconContainerBuilder(
+                            size: notice,
                             notify: (notice > 0) ? notice : null,
                             label: ' Case-Report',
                             icon: 'icons/clip.svg',

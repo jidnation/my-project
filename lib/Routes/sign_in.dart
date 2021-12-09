@@ -11,17 +11,21 @@ class SignInPage extends StatefulWidget {
   _SignInPageState createState() => _SignInPageState();
 }
 
+Database _database = Database();
+SelfDatabase _selfDatabase = SelfDatabase();
+
 class _SignInPageState extends State<SignInPage> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final _signInKey = GlobalKey<FormState>();
-  late Database _database;
   late List<User> registeredUsers;
+  late List<SelfReport> values;
 
   void dbIniti() async {
-    _database = Database();
     await _database.tableGen();
     registeredUsers = await _database.users();
+    await _selfDatabase.selfReportTableGen();
+    values = await _selfDatabase.selfReport();
   }
 
   @override
@@ -139,12 +143,12 @@ class _SignInPageState extends State<SignInPage> {
                                           .pushReplacementNamed(
                                               context, adminPage,
                                               arguments: userNameController
-                                                  .text) as Future?; 
-
+                                                  .text) as Future?;
                                     } else {
                                       if (i == 0) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(snackBar);
+                                        print(' values: ${values}');
                                       }
                                       i++;
                                       continue;

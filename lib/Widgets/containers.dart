@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:my_project/Models/database_controller.dart';
+import 'package:my_project/Models/json_formatter.dart';
 import 'package:my_project/Routes/contacts.dart';
 
 class ContainerBuilder extends StatelessWidget {
@@ -55,6 +57,7 @@ class IconContainerBuilder extends StatelessWidget {
   final String icon;
   final String label;
   final Color colorName;
+  int? size;
   int? notify;
 
   IconContainerBuilder(
@@ -62,7 +65,8 @@ class IconContainerBuilder extends StatelessWidget {
       this.notify,
       required this.icon,
       required this.label,
-      required this.colorName})
+      required this.colorName,
+      this.size})
       : super(key: key);
 
   ////
@@ -92,6 +96,8 @@ class IconContainerBuilder extends StatelessWidget {
     }
     return Container();
   }
+
+  final _selfDatabase = SelfDatabase();
 
   @override
   Widget build(BuildContext context) {
@@ -128,8 +134,8 @@ class IconContainerBuilder extends StatelessWidget {
             ),
           ),
         ]),
-        onTap: () {
-          print('Clicked');
+        onTap: () async {
+          Navigator.pushNamed(context, reportListPage);
         });
   }
 }

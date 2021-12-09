@@ -31,13 +31,15 @@ class AdminFormReg extends StatefulWidget {
   static TextEditingController aDescriptionController = TextEditingController();
 }
 
+AdminDatabase _adminDatabase = AdminDatabase();
+
 class _AdminFormRegState extends State<AdminFormReg> {
   final adminFormKey = GlobalKey<FormState>();
   late Database _database;
 
   void adminDBinit() async {
     _database = Database();
-    await _database.adminRegTableGen();
+    await _adminDatabase.adminRegTableGen();
     // await _database.insertAdmin(_database.adminSignUpSetch);
   }
 
@@ -279,9 +281,9 @@ class _AdminFormRegState extends State<AdminFormReg> {
               onPressed: () async {
                 if (adminFormKey.currentState!.validate()) {
                   var data = SignUpData().signUpData;
-                  var adminList = await _database.adminList();
+                  var adminList = await _adminDatabase.adminList();
                   int _adminId = adminList.length + 1;
-                  await _database.insertAdmin(AdminSignUp(
+                  await _adminDatabase.insertAdmin(AdminSignUp(
                       sex: data['sex'],
                       id: _adminId,
                       aFirstname: data['aFirstname'],
@@ -307,7 +309,7 @@ class _AdminFormRegState extends State<AdminFormReg> {
                       id: _id,
                       userName: AdminFormReg.aUserNameController.text,
                       password: AdminFormReg.aPasswordController.text));
-                Navigator.pushReplacementNamed(context, adminSuccessPage);
+                  Navigator.pushReplacementNamed(context, adminSuccessPage);
                 }
               },
               icon: const FaIcon(

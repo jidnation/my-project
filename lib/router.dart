@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_project/Routes/admin_page.dart';
 import 'package:my_project/Routes/contacts.dart';
 import 'package:my_project/Routes/home_page.dart';
+import 'package:my_project/Routes/report_full_detail.dart';
+import 'package:my_project/Routes/report_list.dart';
 import 'package:my_project/Routes/report_page.dart';
 import 'package:my_project/Routes/sign_in.dart';
 import 'package:my_project/Routes/sing_up_done.dart';
@@ -40,6 +42,19 @@ class Routing {
           var argument = settings.arguments.toString();
           return MaterialPageRoute(
               builder: (_) => AdminPage(userName: argument));
+        }
+
+        case reportFullDetails:
+        {
+          var argument = settings.arguments;
+          return MaterialPageRoute(
+              builder: (_) => ReportFullDetails(details: argument));
+        }
+
+         case reportListPage:
+        {
+          return MaterialPageRoute(
+              builder: (_) => const ReportListPage());
         }
       case successPage:
         {

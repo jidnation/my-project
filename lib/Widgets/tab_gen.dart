@@ -20,12 +20,11 @@ class SelfWidget extends StatefulWidget {
       TextEditingController();
 }
 
-class _SelfWidgetState extends State<SelfWidget> {
-  late Database _database;
+SelfDatabase _selfDatabase = SelfDatabase();
 
+class _SelfWidgetState extends State<SelfWidget> {
   void dbIniti() async {
-    _database = Database();
-    await _database.selfReportTableGen();
+    await _selfDatabase.selfReportTableGen();
   }
 
   @override
@@ -141,8 +140,8 @@ class _SelfWidgetState extends State<SelfWidget> {
             List<String?> _symptoms = SymptomsCheckBox.symptoms;
             if (SymptomsCheckBox.symptoms.isNotEmpty) {
               if (widget.keyValue.currentState!.validate()) {
-                var reportNum = await _database.selfReport();
-                await _database.insertSelfReport(SelfReport(
+                var reportNum = await _selfDatabase.selfReport();
+                await _selfDatabase.insertSelfReport(SelfReport(
                   id: reportNum.length + 1,
                   symptoms: _symptoms.join(','),
                   sex: RadioButton.sexValue,
@@ -151,7 +150,7 @@ class _SelfWidgetState extends State<SelfWidget> {
                   address: ReportingPage.addressController.text,
                   city: ReportingPage.cityController.text,
                   state: ReportingPage.stateController.text,
-                  age: int.parse(ReportingPage.ageController.text) ,
+                  age: int.parse(ReportingPage.ageController.text),
                   otherSymptoms: SymptomsWidget.otherSymptomsController.text,
                   number: int.parse(ReportingPage.numberController.text),
                   commet: SelfWidget.commentController.text,
@@ -194,13 +193,12 @@ class OthersWidget extends StatefulWidget {
   static TextEditingController pFullNameController = TextEditingController();
 }
 
+OtherDatabase _otherDatabase = OtherDatabase();
+
 class _OthersWidgetState extends State<OthersWidget>
     with SingleTickerProviderStateMixin {
-  late Database _database;
-
   void dbIniti() async {
-    _database = Database();
-    await _database.otherReportTableGen();
+    await _otherDatabase.otherReportTableGen();
   }
 
   @override
@@ -344,8 +342,8 @@ class _OthersWidgetState extends State<OthersWidget>
               List<String?> _symptoms = SymptomsCheckBox.symptoms;
               if (SymptomsCheckBox.symptoms.isNotEmpty) {
                 if (widget.keyValue.currentState!.validate()) {
-                  var reportNum = await _database.otherReportList();
-                  await _database.insertOtherReport(OtherReport(
+                  var reportNum = await _otherDatabase.otherReportList();
+                  await _otherDatabase.insertOtherReport(OtherReport(
                     symptoms: _symptoms.join(','),
                     id: reportNum.length + 1,
                     surname: ReportingPage.surnameController.text,
