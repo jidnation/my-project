@@ -29,7 +29,10 @@ class SelfDatabase extends StatefulWidget {
   }
 
   Future<void> insertSelfReport(SelfReport sReport) async {
-    final _reporting = Reporting();
+    final _notify = NotificationDB();
+    final _general = GeneralDB();
+    final _reporting = Reporter();
+
     //creating reference to the database
     final db = await selfDatabase;
 
@@ -38,7 +41,38 @@ class SelfDatabase extends StatefulWidget {
       sReport.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    await _reporting.reportGetter(sReport);
+    _reporting.selfSetter();
+    // await _notify.notificationTable();
+    // var data = await _notify.currentValues().then((value) => value[0]);
+    // await _notify.notiInsert(Values(
+    //     id: 1,
+    //     oRead: data.oRead,
+    //     oUnread: data.oUnread,
+    //     read: data.read,
+    //     unread: (data.unread as int) + 1,
+    //     total: int.parse('${data.unread}') + int.parse('${data.oUnread}')));
+
+    var data2 = sReport.toMap();
+
+    await _general.generalTableGen();
+    await _general.insertGeneral(GeneralData(
+      type: 'self',
+      surname: data2['surname'],
+      others: data2['others'],
+      address: data2['address'],
+      state: data2['state'],
+      city: data2['city'],
+      sex: data2['sex'],
+      number: data2['number'],
+      age: data2['age'],
+      symptoms: data2['symptoms'],
+      otherSymptoms: data2['otherSymptoms'],
+      illnessHistory: data2['illnessHistory'],
+      id: data2['id'],
+      haveIdea: data2['haveIdea'],
+      healthIssue: data2['healthIssue'],
+      commet: data2['commet'],
+    ));
   }
 
   Future<void> updateSReport(SelfReport sReport) async {
@@ -95,12 +129,12 @@ class _SelfDatabaseState extends State<SelfDatabase> {
 
   @override
   Widget build(BuildContext context) {
-    throw UnimplementedError();
+    return Container();
   }
 }
 
 class OtherDatabase extends StatefulWidget {
-  late final otherDatabase;
+  var otherDatabase;
 
   @override
   State<OtherDatabase> createState() => _OtherDatabaseState();
@@ -122,6 +156,9 @@ class OtherDatabase extends StatefulWidget {
   }
 
   Future<void> insertOtherReport(OtherReport oReport) async {
+    final _notify = NotificationDB();
+    final _general = GeneralDB();
+    final _reporting = Reporter();
     //creating reference to the database
     final db = await otherDatabase;
 
@@ -130,6 +167,43 @@ class OtherDatabase extends StatefulWidget {
       oReport.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+
+    _reporting.otherSetter();
+
+    // await _notify.notificationTable();
+    // var data = await _notify.currentValues().then((value) => value[0]);
+    // print(await data);
+    // await _notify.notiInsert(Values(
+    //     id: 1,
+    //     oRead: data.oRead,
+    //     oUnread: (data.oUnread as int) + 1,
+    //     read: data.read,
+    //     unread: data.oUnread,
+    //     total: (data.unread as int) + (data.oUnread as int)));
+
+    // print(
+    //     'unread: ${data.unread}, oRead: ${data.oRead}, read: ${data.read}, oUnread: ${data.oUnread}');
+    var data2 = oReport.toMap();
+    await _general.generalTableGen();
+    await _general.insertGeneral(GeneralData(
+      type: 'others',
+      surname: data2['surname'],
+      others: data2['others'],
+      address: data2['address'],
+      state: data2['state'],
+      city: data2['city'],
+      sex: data2['sex'],
+      number: data2['number'],
+      age: data2['age'],
+      symptoms: data2['symptoms'],
+      otherSymptoms: data2['otherSymptoms'],
+      pFullName: data2['pFullName'],
+      pAddress: data2['pAddress'],
+      rRelation: data2['rRelation'],
+      pSpecifyIllness: data2['pSpecifyIllness'],
+      pCommet: data2['pCommet'],
+      id: data2['id'],
+    ));
   }
 
   Future<void> updateOReport(OtherReport oReport) async {
@@ -143,7 +217,7 @@ class OtherDatabase extends StatefulWidget {
 
       //Ensure that the user has matching id.
       where: 'pFullName = ?',
-      //Passthe Dog's id as a whereArg to prevent SQL injection.
+      //Pass the Dog's id as a whereArg to prevent SQL injection.
       whereArgs: [oReport.pFullName],
     );
   }
@@ -195,8 +269,7 @@ class OtherDatabase extends StatefulWidget {
 }
 
 class _OtherDatabaseState extends State<OtherDatabase> {
-
-    @override
+  @override
   void dispose() {
     super.dispose();
   }
@@ -287,8 +360,7 @@ class Database extends StatefulWidget {
 }
 
 class _DatabaseState extends State<Database> {
-
-    @override
+  @override
   void dispose() {
     super.dispose();
   }
@@ -303,15 +375,15 @@ class NotificationDB extends StatefulWidget {
   @override
   State<NotificationDB> createState() => _NotificationDBState();
 
-  var notiDatabase;
+  var notifyDatabase;
 
   notificationTable() async {
     //Create a user and add it to the admin table
-    notiDatabase = openDatabase(
-      join(await getDatabasesPath(), 'NotificationTable.db'),
+    notifyDatabase = openDatabase(
+      join(await getDatabasesPath(), 'NotificationTabl.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE dataValues(id INTEGER PRIMARY KEY, read INTEGER, unread INTEGER)',
+          'CREATE TABLE dataVal(id INTEGER PRIMARY KEY, read INTEGER, unread INTEGER, oRead INTEGER, oUnread INTEGER, total INTEGER)',
         );
       },
       version: 1,
@@ -319,10 +391,10 @@ class NotificationDB extends StatefulWidget {
   }
 
   Future<void> notiInsert(Values _values) async {
-    final db = await notiDatabase; //creating reference to the database
+    final db = await notifyDatabase; //creating reference to the database
 
     await db.insert(
-      'dataValues',
+      'dataVal',
       _values.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -330,28 +402,30 @@ class NotificationDB extends StatefulWidget {
 
   Future<List<Values>> currentValues() async {
     //Get a reference to the  table
-    final db = await notiDatabase;
+    final db = await notifyDatabase;
 
     //Query the table for all the users
-    final List<Map<String, dynamic>> maps = await db.query('dataValues');
+    final List<Map<String, dynamic>> maps = await db.query('dataVal');
 
-    //Convert the Lis<Map<sstring, dynamic>> into a List<Dog>.
+    //Convert the Lis<Map<sstring, dynamic>> into a List<values>.
     return List.generate(maps.length, (i) {
       return Values(
-        id: maps[i]['id'],
-        unread: maps[i]['unread'],
-        read: maps[i]['read'],
-      );
+          id: maps[i]['id'],
+          unread: maps[i]['unread'],
+          read: maps[i]['read'],
+          oUnread: maps[i]['oUnread'],
+          oRead: maps[i]['oRead'],
+          total: maps[i]['total']);
     });
   }
 
   Future<void> updateValues(Values _value) async {
     //Get a reference to the  table
-    final db = await notiDatabase;
+    final db = await notifyDatabase;
 
     //Update the given user
     await db.update(
-      'dataValues',
+      'dataVal',
       _value.toMap(),
 
       //Ensure that the user has matching id.
@@ -363,8 +437,7 @@ class NotificationDB extends StatefulWidget {
 }
 
 class _NotificationDBState extends State<NotificationDB> {
-
-    @override
+  @override
   void dispose() {
     super.dispose();
   }
@@ -504,5 +577,97 @@ class _AdminDatabaseState extends State<AdminDatabase> {
   @override
   Widget build(BuildContext context) {
     throw UnimplementedError();
+  }
+}
+
+class GeneralDB extends StatefulWidget {
+  GeneralDB({Key? key, id}) : super(key: key);
+
+  @override
+  _GeneralDBState createState() => _GeneralDBState();
+
+  var generalDB;
+
+  ///GENERAL-REPORT SECTION
+
+  //Open DataBase and store the reference.
+  generalTableGen() async {
+    //Create a user and add it to the admin table
+    generalDB = openDatabase(
+      join(await getDatabasesPath(), 'GenReportContainer.db'),
+      onCreate: (db, version) {
+        return db.execute(
+            'CREATE TABLE generalReports(id INTEGER PRIMARY KEY, surname TEXT, type TEXT, others TEXT, address TEXT, age INTEGER, number INTEGER, city TEXT, state TEXT, illnessHistory TEXT, haveIdea TEXT, healthIssue TEXT, commet TEXT, otherSymptoms TEXT, sex TEXT, symptoms TEXT, pFullName TEXT, pCommet TEXT, pAddress TEXT, pSpecifyIllness TEXT, rRelation TEXT)');
+      },
+      version: 1,
+    );
+  }
+
+  Future<void> insertGeneral(GeneralData gReport) async {
+    //creating reference to the database
+    final db = await generalDB;
+
+    await db.insert(
+      'generalReports',
+      gReport.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<void> updateSReport(GeneralData gReport) async {
+    //Get a reference to the  table
+    final db = await generalDB;
+
+    //Update the given user
+    await db.update(
+      'generalReports',
+      gReport.toMap(),
+
+      //Ensure that the user has matching id.
+      where: 'surname = ?',
+      //Pass the Dog's id as a whereArg to prevent SQL injection.
+      whereArgs: [gReport.surname],
+    );
+  }
+
+  Future<List<GeneralData>> generalReport() async {
+    //Get a reference to the  table
+    final db = await generalDB;
+
+    //Query the table for all the reports
+    final List<Map<String, dynamic>> maps = await db.query('generalReports');
+
+    //Convert the Lis<Map<String, dynamic>> into a List.
+    return List.generate(maps.length, (i) {
+      return GeneralData(
+          id: maps[i]['id'],
+          surname: maps[i]['surname'],
+          type: maps[i]['type'],
+          others: maps[i]['others'],
+          address: maps[i]['address'],
+          age: maps[i]['age'],
+          number: maps[i]['number'],
+          healthIssue: maps[i]['healthIssue'],
+          city: maps[i]['city'],
+          state: maps[i]['state'],
+          illnessHistory: maps[i]['illnessHistory'],
+          haveIdea: maps[i]['haveIdea'],
+          commet: maps[i]['commet'],
+          otherSymptoms: maps[i]['otherSymptoms'],
+          symptoms: maps[i]['symptoms'],
+          pCommet: maps[i]['pCommet'],
+          pAddress: maps[i]['pAddress'],
+          sex: maps[i]['sex'],
+          pFullName: maps[i]['pFullName'],
+          pSpecifyIllness: maps[i]['pSpecifyIllness'],
+          rRelation: maps[i]['pFullName']);
+    });
+  }
+}
+
+class _GeneralDBState extends State<GeneralDB> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

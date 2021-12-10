@@ -12,19 +12,33 @@ class AdminPage extends StatefulWidget {
 }
 
 NotificationDB _notiDatabase = NotificationDB();
-SelfDatabase _selfDatabase = SelfDatabase();
 
-class Reporting {
+class Reporter {
   bool isRead = false;
 
-  Map<String, dynamic> data = {};
-
-  reportGetter(SelfReport report) async {
-    data = report.toMap();
+  selfSetter() async {
     await _notiDatabase.notificationTable();
     await _notiDatabase.currentValues().then((value) =>
         _notiDatabase.notiInsert(Values(
-            id: 1, read: value[0].read, unread: (value[0].unread as int) + 1)));
+            id: 1,
+            read: (value[0].read == null ) ? 0 : value[0].read,
+            oUnread: value[0].oUnread,
+            total: (value[0].total == null ) ? 0 : value[0].total,
+            unread: (value[0].unread as int) + 1)));
+  }
+
+  otherSetter() async {
+    await _notiDatabase.notificationTable();
+    await _notiDatabase.currentValues().then((value) =>
+        _notiDatabase.notiInsert(Values(
+            id: 1,
+            oRead: (value[0].oRead == null ) ? 0 : value[0].oRead,
+            read: value[0].read,
+            unread: value[0].unread,
+            total: (value[0].total == null ) ? 0 : value[0].total,
+            oUnread: (value[0].oUnread as int) + 1)));
+
+    print(await _notiDatabase.currentValues());
   }
 }
 
@@ -55,7 +69,6 @@ class _AdminPageState extends State<AdminPage> {
   @override
   void dispose() {
     super.dispose();
-    _selfDatabase.selfDatabase().dispose();
   }
 
   @override

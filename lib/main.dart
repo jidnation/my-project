@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:my_project/Models/database_controller.dart';
+import 'package:my_project/Models/json_formatter.dart';
 // import 'package:my_project/Models/database_controller.dart';
 // import 'package:my_project/Models/database_controller.dart';
 // import 'package:my_project/Models/json_formatter.dart';
@@ -15,14 +17,26 @@ void main() async {
   );
 }
 
+final _notify = NotificationDB();
+final _general = GeneralDB();
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  getter() async {
+    await _general.generalTableGen();
+    await _notify.notificationTable();
+    print(await _general.generalReport());
+    print(await _notify.currentValues());
+  }
 
   static const String _title = "My Undergraduate Project";
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // _notify.notificationTable();
+    getter();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: _title,

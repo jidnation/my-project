@@ -142,7 +142,7 @@ class _SelfWidgetState extends State<SelfWidget> {
               if (widget.keyValue.currentState!.validate()) {
                 var reportNum = await _selfDatabase.selfReport();
                 await _selfDatabase.insertSelfReport(SelfReport(
-                  id: reportNum.length + 1,
+                  id: reportNum.length , //TODO to increase it back by 1
                   symptoms: _symptoms.join(','),
                   sex: RadioButton.sexValue,
                   surname: ReportingPage.surnameController.text,
@@ -312,7 +312,7 @@ class _OthersWidgetState extends State<OthersWidget>
           padding: const EdgeInsets.symmetric(vertical: 10),
           color: Colors.white,
           child: Text(
-            'If possible, can you ask the person you repoting for maybe he/she had any health challenges before, such as diabetes, asthma, and so on.',
+            'If possible, can you ask the person you reporting for maybe he/she had any health challenges before, such as diabetes, asthma, and so on.',
             style: noticeTextStyle(),
           ),
         ),
@@ -345,15 +345,15 @@ class _OthersWidgetState extends State<OthersWidget>
                   var reportNum = await _otherDatabase.otherReportList();
                   await _otherDatabase.insertOtherReport(OtherReport(
                     symptoms: _symptoms.join(','),
-                    id: reportNum.length + 1,
+                    id: reportNum.length , //TODO to add 1
                     surname: ReportingPage.surnameController.text,
                     others: ReportingPage.othersController.text,
                     address: ReportingPage.addressController.text,
                     city: ReportingPage.cityController.text,
                     sex: RadioButton.sexValue,
                     state: ReportingPage.stateController.text,
-                    age: ReportingPage.ageController.text as int,
-                    number: ReportingPage.numberController.text as int,
+                    age: int.parse(ReportingPage.ageController.text),
+                    number: int.parse(ReportingPage.numberController.text),
                     otherSymptoms: SymptomsWidget.otherSymptomsController.text,
                     pCommet: OthersWidget.pCommetController.text,
                     pSpecifyIllness:

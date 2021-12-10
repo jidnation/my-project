@@ -213,18 +213,113 @@ class AdminSignUp {
 }
 
 class Values {
-  final int? id;
+  final int id;
   final int? read;
   final int? unread;
+  final int? oRead;
+  final int? oUnread;
+  final int? total;
 
-  Values({required this.id, required this.read, required this.unread});
+  Values(
+      {this.total,
+      this.oRead,
+      this.oUnread,
+      required this.id,
+      this.read,
+      this.unread});
 
   Map<String, dynamic> toMap() {
-    return {'id': id, 'read': read, 'unread': unread};
+    return {
+      //(oUnread as int) + (unread as int)
+      'id': id,
+      'read': read,
+      'unread': unread,
+      'oRead': oRead,
+      'oUnread': oUnread,
+      'total': total,
+    };
   }
 
   @override
   String toString() {
-    return 'Values{id : $id, read: $read, unread: $unread}';
+    return 'Values{id : $id, read: $read, unread: $unread, oRead: $oRead, oUnread: $oUnread, total: $total }';
+  }
+}
+
+class GeneralData {
+  final int? id;
+  final String? surname;
+  final String? others;
+  final String? address;
+  final int? age;
+  final int? number;
+  final String? city;
+  final String? state;
+  final String? illnessHistory;
+  final String? haveIdea;
+  final String? healthIssue;
+  final String? commet;
+  final String? sex;
+  final String? pCommet;
+  final String? pSpecifyIllness;
+  final String? rRelation;
+  final String? pAddress;
+  final String? pFullName;
+  final String? otherSymptoms;
+  final String? symptoms;
+  final String type;
+
+  GeneralData(
+      {this.id,
+      this.surname,
+      required this.type,
+      this.others,
+      this.address,
+      this.age,
+      this.number,
+      this.city,
+      this.state,
+      this.illnessHistory,
+      this.haveIdea,
+      this.healthIssue,
+      this.commet,
+      this.sex,
+      this.pCommet,
+      this.pSpecifyIllness,
+      this.rRelation,
+      this.pAddress,
+      this.pFullName,
+      this.otherSymptoms,
+      this.symptoms});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'type': type,
+      'surname': surname,
+      'others': others,
+      'address': address,
+      'age': age,
+      'number': number,
+      'city': city,
+      'state': state,
+      'illnessHistory': illnessHistory,
+      'haveIdea': haveIdea,
+      'healthIssue': healthIssue,
+      'commet': commet,
+      'sex': sex,
+      'pcommet': pCommet,
+      'pSpecifyIllness': pSpecifyIllness,
+      'rRelation': rRelation,
+      'pAddress': pAddress,
+      'pFullName': pFullName,
+      'otherSymptoms': otherSymptoms,
+      'symptoms': symptoms,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'GeneralData{ id : $id, surname : $surname, , type : $type, healthIssue : $healthIssue, others : $others, address : $address, age : $age, number : $number, city : $city, state : $state, illnessHistory : $illnessHistory,haveIdea : $haveIdea, commet : $commet, otherSymptoms : $otherSymptoms, sex : $sex,  symptoms : $symptoms, pcommet: $pCommet, pSpecifyIllness: $pSpecifyIllness, rRelation: $rRelation, pAddress: $pAddress, pFullName: $pFullName}';
   }
 }
