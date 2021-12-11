@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:my_project/Models/database_controller.dart';
-import 'package:my_project/Models/json_formatter.dart';
 // import 'package:my_project/Models/database_controller.dart';
 // import 'package:my_project/Models/database_controller.dart';
 // import 'package:my_project/Models/json_formatter.dart';
 import 'package:my_project/Routes/contacts.dart';
-import 'package:my_project/Routes/report_list.dart';
 import 'package:my_project/router.dart';
 
 void main() async {
@@ -19,7 +17,7 @@ void main() async {
 }
 
 // final _notify = NotificationDB();
-// final _general = GeneralDB();
+final _general = GeneralDB();
 // final _fetcher = Fetchers();
 // final _selfDatabase = SelfDatabase();
 // final _otherDatabase = OtherDatabase();
@@ -27,7 +25,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  getter() async {
+  // getter() async {
   // await _selfDatabase.selfReportTableGen();
   // print(await _selfDatabase.selfReport());
   // await _otherDatabase.otherReportTableGen();
@@ -54,7 +52,7 @@ class MyApp extends StatelessWidget {
   //     symptoms: 'Fever(iba)'));
   // await _notify.notificationTable();
   // print(await _notify.currentValues());
-  }
+  // }
 
   static const String _title = "My Undergraduate Project";
 

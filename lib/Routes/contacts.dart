@@ -7,3 +7,4 @@ const String successPage = '/success_page';
 const String adminSuccessPage = '/adminSuccess_page';
 const String reportListPage = '/reportList_page';
 const String reportFullDetails = '/reportDetails_page';
+const String oReportFullDetails = '/oReportDetails_page';

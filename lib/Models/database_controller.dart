@@ -245,7 +245,7 @@ class OtherDatabase extends StatefulWidget {
           sex: maps[i]['sex'],
           pFullName: maps[i]['pFullName'],
           pSpecifyIllness: maps[i]['pSpecifyIllness'],
-          rRelation: maps[i]['pFullName'],
+          rRelation: maps[i]['rRelation'],
           symptoms: maps[i]['symptoms'],
           otherSymptoms: maps[i]['otherSymptoms']);
     });

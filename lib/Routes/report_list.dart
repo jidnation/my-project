@@ -193,14 +193,17 @@ class _ReportListPageState extends State<ReportListPage> {
                                       width: 70,
                                       height: 30,
                                       decoration: BoxDecoration(
-                                        color: (data[index].type == 'self')
-                                            ? Colors.red.shade300
-                                            : Colors.purple.shade300,
+                                        color:
+                                            (data[index + startingIndex].type ==
+                                                    'self')
+                                                ? Colors.red.shade300
+                                                : Colors.purple.shade300,
                                         borderRadius: BorderRadius.circular(15),
                                       ),
                                       child: Center(
                                         child: Text(
-                                            (data[index].type == 'self')
+                                            (data[index + startingIndex].type ==
+                                                    'self')
                                                 ? 'SelfReporting'
                                                 : 'Other-Report',
                                             style: TextStyle(
@@ -219,15 +222,25 @@ class _ReportListPageState extends State<ReportListPage> {
                                   ),
                                 ]),
                                 onTap: () {
-                                  Navigator.pushNamed(
-                                      context, reportFullDetails,
-                                      arguments: snapshot
-                                          .data[(index + startingIndex)]);
+                                  ('${snapshot.data[index + startingIndex].type}' ==
+                                          'self')
+                                      ? Navigator.pushNamed(
+                                          context, reportFullDetails,
+                                          arguments: snapshot
+                                              .data[(index + startingIndex)])
+                                      : Navigator.pushNamed(
+                                          context, oReportFullDetails,
+                                          arguments: snapshot
+                                              .data[(index + startingIndex)]);
                                 });
                           }),
                     );
                   } else {
-                    return const CircularProgressIndicator();
+                    return const Center(
+                        child: CircularProgressIndicator(
+                      color: Colors.green,
+                      strokeWidth: 6,
+                    ));
                   }
                 })
           ]),

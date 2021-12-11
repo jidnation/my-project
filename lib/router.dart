@@ -5,10 +5,10 @@ import 'package:my_project/Routes/home_page.dart';
 import 'package:my_project/Routes/report_full_detail.dart';
 import 'package:my_project/Routes/report_list.dart';
 import 'package:my_project/Routes/report_page.dart';
+import 'package:my_project/Routes/reporting_done.dart';
 import 'package:my_project/Routes/sign_in.dart';
 import 'package:my_project/Routes/sing_up_done.dart';
 import 'package:my_project/Routes/sing_up_page.dart';
-import 'package:my_project/Routes/reporting_done.dart';
 
 class Routing {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -32,7 +32,7 @@ class Routing {
         {
           return MaterialPageRoute(builder: (_) => const ReportingPage());
         }
-        case adminSuccessPage:
+      case adminSuccessPage:
         {
           return MaterialPageRoute(builder: (_) => const AdminSuccessPage());
         }
@@ -44,17 +44,23 @@ class Routing {
               builder: (_) => AdminPage(userName: argument));
         }
 
-        case reportFullDetails:
+      case reportFullDetails:
         {
           var argument = settings.arguments;
           return MaterialPageRoute(
               builder: (_) => ReportFullDetails(details: argument));
         }
 
-         case reportListPage:
+      case oReportFullDetails:
         {
+          var argument = settings.arguments;
           return MaterialPageRoute(
-              builder: (_) => const ReportListPage());
+              builder: (_) => OReportFullDetails(details: argument));
+        }
+
+      case reportListPage:
+        {
+          return MaterialPageRoute(builder: (_) => const ReportListPage());
         }
       case successPage:
         {
