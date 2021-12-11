@@ -14,17 +14,40 @@ class AdminPage extends StatefulWidget {
 NotificationDB _notiDatabase = NotificationDB();
 
 class Reporter {
+  // List<SelfReport> currentSelfValue = [];
+  // List<Values> values = [];
   bool isRead = false;
+  int unread = 0;
+  int read = 0;
 
   selfSetter() async {
     await _notiDatabase.notificationTable();
-    await _notiDatabase.currentValues().then((value) =>
-        _notiDatabase.notiInsert(Values(
-            id: 1,
-            read: (value[0].read == null ) ? 0 : value[0].read,
-            oUnread: value[0].oUnread,
-            total: (value[0].total == null ) ? 0 : value[0].total,
-            unread: (value[0].unread as int) + 1)));
+    await _notiDatabase
+        .currentValues()
+        .then((value) => _notiDatabase.notiInsert(Values(
+              id: 1,
+              read: (value[0].read == null) ? 0 : value[0].read,
+              oUnread: value[0].oUnread,
+              total: (value[0].total == null) ? 0 : value[0].total,
+              unread: (value[0].unread as int) + 1,
+            )));
+  }
+
+  selfGetter() async {
+    await _notiDatabase.notificationTable();
+    await _notiDatabase.currentValues().then((value) {
+      unread = (value[0].unread as int);
+      read = (value[0].read as int);
+      // notice = (value[0].unread as int) + (value[0].oUnread as int);
+
+      return value;
+    }).then((value) => _notiDatabase.notiInsert(Values(
+        id: 1,
+        read: value[0].read,
+        oRead: value[0].oRead,
+        oUnread: value[0].oUnread,
+        total: (value[0].unread as int) + (value[0].oUnread as int),
+        unread: value[0].unread)));
   }
 
   otherSetter() async {
@@ -32,38 +55,65 @@ class Reporter {
     await _notiDatabase.currentValues().then((value) =>
         _notiDatabase.notiInsert(Values(
             id: 1,
-            oRead: (value[0].oRead == null ) ? 0 : value[0].oRead,
+            oRead: (value[0].oRead == null) ? 0 : value[0].oRead,
             read: value[0].read,
             unread: value[0].unread,
-            total: (value[0].total == null ) ? 0 : value[0].total,
+            total: (value[0].total == null) ? 0 : value[0].total,
             oUnread: (value[0].oUnread as int) + 1)));
 
     print(await _notiDatabase.currentValues());
   }
+
+  otherGetter() async {
+    await _notiDatabase.notificationTable();
+    await _notiDatabase.currentValues().then((value) {
+      unread = (value[0].oUnread as int);
+      read = (value[0].oRead as int);
+      // notice = (value[0].unread as int) + (value[0].oUnread as int);
+
+      return value;
+    }).then((value) => _notiDatabase.notiInsert(Values(
+        id: 1,
+        read: value[0].read,
+        oRead: value[0].oRead,
+        oUnread: value[0].oUnread,
+        total: (value[0].unread as int) + (value[0].oUnread as int),
+        unread: value[0].unread)));
+  }
 }
 
 class _AdminPageState extends State<AdminPage> {
-  List<SelfReport> currentSelfValue = [];
-  List<Values> values = [];
-  int unread = 0;
-  int read = 0;
-  int notice = 0;
+  // void initializer() async {
+  //   setState(() {
+  //     notice = (values[0].unread as int) - (values[0].read as int);
+  //   });
+  // await _selfDatabase.selfReportTableGen();
+  // currentSelfValue = await _selfDatabase.selfReport();
+  // print('from adminPage: $currentSelfValue');
+  // }
 
-  void initializer() async {
+  int notice = 0;
+  void noticeBoard() async {
     await _notiDatabase.notificationTable();
-    values = await _notiDatabase.currentValues();
-    setState(() {
-      notice = (values[0].unread as int) - (values[0].read as int);
+    await _notiDatabase.currentValues().then((value) {
+      _notiDatabase.notiInsert(Values(
+          id: 1,
+          read: value[0].read,
+          oRead: value[0].oRead,
+          oUnread: value[0].oUnread,
+          total: (value[0].unread as int) + (value[0].oUnread as int),
+          unread: value[0].unread));
+      setState(() {
+        notice = (value[0].unread as int) + (value[0].oUnread as int);
+      });
     });
-    // await _selfDatabase.selfReportTableGen();
-    // currentSelfValue = await _selfDatabase.selfReport();
-    // print('from adminPage: $currentSelfValue');
+    print(notice);
   }
 
   @override
   void initState() {
     super.initState();
-    initializer();
+    noticeBoard();
   }
 
   @override
@@ -73,6 +123,8 @@ class _AdminPageState extends State<AdminPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _reporting = Reporter();
+
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -92,7 +144,6 @@ class _AdminPageState extends State<AdminPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconContainerBuilder(
-                            size: notice,
                             notify: (notice > 0) ? notice : null,
                             label: ' Case-Report',
                             icon: 'icons/clip.svg',

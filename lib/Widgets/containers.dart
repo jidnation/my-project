@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:my_project/Routes/contacts.dart';
 
 class ContainerBuilder extends StatelessWidget {
@@ -55,7 +55,6 @@ class IconContainerBuilder extends StatelessWidget {
   final String icon;
   final String label;
   final Color colorName;
-  int? size;
   int? notify;
 
   IconContainerBuilder(
@@ -63,20 +62,19 @@ class IconContainerBuilder extends StatelessWidget {
       this.notify,
       required this.icon,
       required this.label,
-      required this.colorName,
-      this.size})
+      required this.colorName})
       : super(key: key);
 
   ////
   Widget notification() {
     if (notify != null) {
       return Positioned(
-        top: 0,
+        top: -1,
         right: 0,
         child: Container(
           padding: const EdgeInsets.all(2),
-          width: 18,
-          height: 18,
+          width: 20,
+          height: 20,
           decoration: BoxDecoration(
             color: Colors.red.shade700,
             borderRadius: BorderRadius.circular(50),
@@ -85,8 +83,8 @@ class IconContainerBuilder extends StatelessWidget {
             child: Text('$notify',
                 style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 10,
-                    fontFamily: 'Lobster',
+                    fontSize: 15,
+                    // fontFamily: 'Lobster',
                     fontWeight: FontWeight.bold)),
           ),
         ),
@@ -94,7 +92,6 @@ class IconContainerBuilder extends StatelessWidget {
     }
     return Container();
   }
-
 
   @override
   Widget build(BuildContext context) {
