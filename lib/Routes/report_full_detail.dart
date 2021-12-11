@@ -35,10 +35,38 @@ class _ReportFullDetailsState extends State<ReportFullDetails> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Center(
-                          child: Text('Self-Report',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w400, fontSize: 14))),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 40),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                  height: 120,
+                                  width: 120,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(60),
+                                      color: Colors.grey.shade300,
+                                      image: DecorationImage(
+                                          image: ('${data.sex}' == 'Female')
+                                              ? const AssetImage(
+                                                  'images/female.png')
+                                              : const AssetImage(
+                                                  'images/male.png')))),
+                              const SizedBox(height: 5),
+                              Text('${data.age} years',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w300)),
+                              const SizedBox(height: 12),
+                              const Text('Self-Report',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14)),
+                            ],
+                          ),
+                        ),
+                      ),
                       const SizedBox(height: 15),
                       Text('${data.surname} ${data.others}'.toUpperCase(),
                           style: const TextStyle(
