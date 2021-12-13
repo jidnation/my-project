@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_project/Routes/admin_page.dart';
 import 'package:my_project/Routes/contacts.dart';
 import 'package:my_project/Routes/home_page.dart';
+import 'package:my_project/Routes/mapping_page.dart';
 import 'package:my_project/Routes/report_full_detail.dart';
 import 'package:my_project/Routes/report_list.dart';
 import 'package:my_project/Routes/report_page.dart';
@@ -26,6 +27,11 @@ class Routing {
       case signUpPage:
         {
           return MaterialPageRoute(builder: (_) => const SignUpPage());
+        }
+
+      case mapping:
+        {
+          return MaterialPageRoute(builder: (_) => const MappingPage());
         }
 
       case reportingPage:

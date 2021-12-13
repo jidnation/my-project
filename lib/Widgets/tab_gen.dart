@@ -142,7 +142,7 @@ class _SelfWidgetState extends State<SelfWidget> {
               if (widget.keyValue.currentState!.validate()) {
                 var reportNum = await _selfDatabase.selfReport();
                 await _selfDatabase.insertSelfReport(SelfReport(
-                  id: reportNum.length , //TODO to increase it back by 1
+                  id: reportNum.length + 1,
                   symptoms: _symptoms.join(','),
                   sex: RadioButton.sexValue,
                   surname: ReportingPage.surnameController.text,
@@ -247,60 +247,40 @@ class _OthersWidgetState extends State<OthersWidget>
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const SectionHeading(
-                title:
-                    'Please provide the details of the person you are reporting for'),
-            const SizedBox(
-              height: 10,
-            ),
-            RegForm(
-                controller: OthersWidget.pFullNameController,
-                labelValue: 'FullName',
-                keyboardName: TextInputType.text),
-            RegForm(
-                controller: OthersWidget.pAddressController,
-                labelValue: 'Address',
-                keyboardName: TextInputType.text),
-            // SexRow(sex: _sex),
-            // RegForm(
-            //     controller: OthersWidget.pNumberController,
-            //     labelValue: 'Phone Number',
-            //     keyboardName: TextInputType.number),
-            // Row(children: [
-            //   SizedBox(
-            //     child: ,
-            //     width: MediaQuery.of(context).size.width / 2.15,
-            //   ),
-            //   const SizedBox(
-            //     width: 15,
-            //   ),
-            //   SizedBox(
-            //     width: MediaQuery.of(context).size.width / 2.9,
-            //     child: RegForm(
-            //         controller: OthersWidget.pAgeController,
-            //         labelValue: ' Age',
-            //         keyboardName: TextInputType.text),
-            //   )
-            // ]),
-            const SizedBox(
-              height: 10,
-            ),
-            const SectionHeading(title: 'Who are you to the person?'),
-            RegForm(
-              controller: OthersWidget.rRelationController,
-              labelValue: '',
-              keyboardName: TextInputType.text,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const SectionHeading(
-              title: 'SYMPTOMS :',
-            ),
-            const SymptomsWidget(),
+                  const SectionHeading(
+                      title:
+                          'Please provide the details of the person you are reporting for'),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  RegForm(
+                      controller: OthersWidget.pFullNameController,
+                      labelValue: 'FullName',
+                      keyboardName: TextInputType.text),
+                  RegForm(
+                      controller: OthersWidget.pAddressController,
+                      labelValue: 'Address',
+                      keyboardName: TextInputType.text),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const SectionHeading(title: 'Who are you to the person?'),
+                  RegForm(
+                    controller: OthersWidget.rRelationController,
+                    labelValue: '',
+                    keyboardName: TextInputType.text,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const SectionHeading(
+                    title: 'SYMPTOMS :',
+                  ),
+                  const SymptomsWidget(),
           ]),
         ),
         Divider(
@@ -345,7 +325,7 @@ class _OthersWidgetState extends State<OthersWidget>
                   var reportNum = await _otherDatabase.otherReportList();
                   await _otherDatabase.insertOtherReport(OtherReport(
                     symptoms: _symptoms.join(','),
-                    id: reportNum.length , //TODO to add 1
+                    id: reportNum.length + 1 ,
                     surname: ReportingPage.surnameController.text,
                     others: ReportingPage.othersController.text,
                     address: ReportingPage.addressController.text,
@@ -356,8 +336,7 @@ class _OthersWidgetState extends State<OthersWidget>
                     number: int.parse(ReportingPage.numberController.text),
                     otherSymptoms: SymptomsWidget.otherSymptomsController.text,
                     pCommet: OthersWidget.pCommetController.text,
-                    pSpecifyIllness:
-                        OthersWidget.pSpecifyIllnessController.text,
+                    pSpecifyIllness: OthersWidget.pSpecifyIllnessController.text,
                     rRelation: OthersWidget.rRelationController.text,
                     pAddress: OthersWidget.pAddressController.text,
                     pFullName: OthersWidget.pFullNameController.text,

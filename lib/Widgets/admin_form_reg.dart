@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_project/Models/data_controller.dart';
 import 'package:my_project/Models/database_controller.dart';
 import 'package:my_project/Models/json_formatter.dart';
 import 'package:my_project/Routes/contacts.dart';
@@ -11,13 +10,12 @@ class AdminFormReg extends StatefulWidget {
 
   @override
   _AdminFormRegState createState() => _AdminFormRegState();
+
   static TextEditingController aFirstnameController = TextEditingController();
-  static TextEditingController ahospitalNameController =
-      TextEditingController();
+  static TextEditingController ahospitalNameController = TextEditingController();
   static TextEditingController aMNameController = TextEditingController();
   static TextEditingController aLNameController = TextEditingController();
-  static TextEditingController aStreetAddressController =
-      TextEditingController();
+  static TextEditingController aStreetAddressController = TextEditingController();
   static TextEditingController aCityController = TextEditingController();
   static TextEditingController aStateController = TextEditingController();
   static TextEditingController aEmailController = TextEditingController();
@@ -31,42 +29,18 @@ class AdminFormReg extends StatefulWidget {
   static TextEditingController aDescriptionController = TextEditingController();
 }
 
-AdminDatabase _adminDatabase = AdminDatabase();
+final _adminDatabase = AdminDatabase();
 
 class _AdminFormRegState extends State<AdminFormReg> {
   final adminFormKey = GlobalKey<FormState>();
-  late Database _database;
-
-  void adminDBinit() async {
-    _database = Database();
-    await _adminDatabase.adminRegTableGen();
-    // await _database.insertAdmin(_database.adminSignUpSetch);
-  }
 
   @override
   void initState() {
     super.initState();
-    adminDBinit();
   }
 
   @override
   void dispose() {
-    AdminFormReg.aFirstnameController;
-    AdminFormReg.aCityController;
-    AdminFormReg.ahospitalNameController;
-    AdminFormReg.aMNameController;
-    AdminFormReg.aLNameController;
-    AdminFormReg.aSpecialController;
-    AdminFormReg.aStateController;
-    AdminFormReg.aStreetAddressController;
-    AdminFormReg.aDOBController;
-    AdminFormReg.aNumber1Controller;
-    AdminFormReg.aNumber2Controller;
-    AdminFormReg.aReligiouController;
-    AdminFormReg.aUserNameController;
-    AdminFormReg.aPasswordController;
-    AdminFormReg.aDescriptionController;
-    AdminFormReg.aEmailController;
     super.dispose();
   }
 
@@ -279,36 +253,29 @@ class _AdminFormRegState extends State<AdminFormReg> {
             ),
             child: TextButton.icon(
               onPressed: () async {
+                await _adminDatabase.adminRegTableGen();
+                  int _adminId = await _adminDatabase.adminList().then((value) => value.length);
                 if (adminFormKey.currentState!.validate()) {
-                  var data = SignUpData().signUpData;
-                  var adminList = await _adminDatabase.adminList();
-                  int _adminId = adminList.length + 1;
                   await _adminDatabase.insertAdmin(AdminSignUp(
-                      sex: data['sex'],
-                      id: _adminId,
-                      aFirstname: data['aFirstname'],
-                      aCity: data['aCity'],
-                      ahospitalName: data['ahospitalName'],
-                      aMName: data['aMName'],
-                      aLName: data['aLName'],
-                      aSpecial: data['aSpecial'],
-                      aState: data['aState'],
-                      aStreetAddress: data['aStreetAddress'],
-                      aDOB: data['aDOB'],
-                      aNumber1: data['aNumber1'].toInt(),
-                      aNumber2: data['aNumber2'].toInt(),
-                      aReligiou: data['aReligiou'],
-                      aUserName: data['aUserName'],
-                      aPassword: data['aPassword'],
-                      aDescription: data['aDescription'],
-                      aEmail: data['aEmail']));
-                  await _database.tableGen();
-                  var list = await _database.users();
-                  int _id = list.length + 1;
-                  await _database.insert(User(
-                      id: _id,
-                      userName: AdminFormReg.aUserNameController.text,
-                      password: AdminFormReg.aPasswordController.text));
+                      id: _adminId++,
+                      aFirstname: AdminFormReg.aFirstnameController.text,
+                      aCity: AdminFormReg.aCityController.text,
+                      ahospitalName: AdminFormReg.ahospitalNameController.text,
+                      aMName: AdminFormReg.aMNameController.text,
+                      aLName: AdminFormReg.aLNameController.text,
+                      aSpecial: AdminFormReg.aSpecialController.text,
+                      aState: AdminFormReg.aStateController.text,
+                      aStreetAddress: AdminFormReg.aStreetAddressController.text,
+                      aDOB: AdminFormReg.aDOBController.text,
+                      aNumber1: int.parse(AdminFormReg.aNumber1Controller.text),
+                      aNumber2: int.parse(AdminFormReg.aNumber2Controller.text),
+                      aReligiou: AdminFormReg.aReligiouController.text,
+                      aUserName: AdminFormReg.aUserNameController.text,
+                      aPassword: AdminFormReg.aPasswordController.text,
+                      aDescription: AdminFormReg.aDescriptionController.text,
+                      aEmail: AdminFormReg.aEmailController.text,
+                      sex : RadioButton.sexValue as String,
+                  ));
                   Navigator.pushReplacementNamed(context, adminSuccessPage);
                 }
               },

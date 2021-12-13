@@ -13,7 +13,6 @@ class ReportListPage extends StatefulWidget {
 }
 
 final _numbers = NotificationDB();
-final _selfDatabase = SelfDatabase();
 final _generalDatabase = GeneralDB();
 final _fetchers = Fetchers();
 
@@ -23,19 +22,11 @@ class Fetchers {
   int _startingIndex = 0;
   int _unread = 0;
   int _read = 0;
-  int _oUnread = 0;
-  int _oRead = 0;
-  int _total = 0;
-  int _totalRead = 0;
   var generalList = [];
 
   int get startingIndex => _startingIndex;
   int get unread => _unread;
   int get read => _read;
-  int get oUnread => _oUnread;
-  int get oRead => _oRead;
-  int get total => _total;
-  int get totalRead => _totalRead;
 
   // GETTING OF THE CURRENT VALUES
   unitSetter() async {
@@ -43,23 +34,17 @@ class Fetchers {
     await _numbers.currentValues().then((value) {
       _unread = value[0].unread as int;
       _read = value[0].read as int;
-      _oUnread = value[0].oUnread as int;
-      _oRead = value[0].oRead as int;
-      _total = value[0].total as int;
-      _totalRead = _oRead + _read;
     });
-    print(
-        'unread: $_unread, read: $_read, starting: $_startingIndex, oUnread: $_oUnread, oRead: $_oRead, total: $_total, totalRead: $_totalRead');
   }
 
   // COLLECTING TO THE DATABASE WE ARE WORKING WITH
   dataFetcher() async {
-    _fetchers.unitSetter();
+    await _fetchers.unitSetter();
     await _generalDatabase.generalTableGen();
     generalList = await _generalDatabase.generalReport();
     _startingIndex = await _generalDatabase
         .generalReport()
-        .then((value) => value.length - _total);
+        .then((value) => value.length - unread);
 
     return generalList;
   }
@@ -121,15 +106,15 @@ class _ReportListPageState extends State<ReportListPage> {
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     var data = snapshot.data;
-                    int startingIndex = data.length - _fetchers._total;
+                    int startingIndex = data.length - _fetchers._unread;
 
                     return Container(
-                      height: (_fetchers._total).toDouble() * 160,
+                      height: (_fetchers._unread).toDouble() * 160,
                       margin: const EdgeInsets.only(bottom: 15, top: 10),
                       child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           // shrinkWrap: true,
-                          itemCount: 4,
+                          itemCount: _fetchers._unread,
                           clipBehavior: Clip.none,
                           itemBuilder: (context, index) {
                             return GestureDetector(
@@ -188,37 +173,55 @@ class _ReportListPageState extends State<ReportListPage> {
                                   ),
                                   Positioned(
                                     top: 13,
-                                    right: 20,
-                                    child: Container(
-                                      width: 70,
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                        color:
-                                            (data[index + startingIndex].type ==
-                                                    'self')
+                                    right: 15,
+                                    child: Row(children: [
+                                      Container(
+                                        width: 70,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                          color: (data[index + startingIndex]
+                                                      .type ==
+                                                  'self')
+                                              ? Colors.red.shade300
+                                              : Colors.purple.shade300,
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                              (data[index + startingIndex]
+                                                          .type ==
+                                                      'self')
+                                                  ? 'SelfReporting'
+                                                  : 'Other-Report',
+                                              style: TextStyle(
+                                                  color: Colors.grey.shade200,
+                                                  fontSize: 12,
+                                                  shadows: const [
+                                                    Shadow(
+                                                        color: Colors.white,
+                                                        offset: Offset(0, 0.5)),
+                                                    Shadow(
+                                                        color: Colors.grey,
+                                                        offset:
+                                                            Offset(0.1, 0.6)),
+                                                  ])),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      Container(
+                                          width: 20,
+                                          height: 20,
+                                          decoration: BoxDecoration(
+                                            color: (data[index + startingIndex]
+                                                        .isRead ==
+                                                    'unread')
                                                 ? Colors.red.shade300
-                                                : Colors.purple.shade300,
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                            (data[index + startingIndex].type ==
-                                                    'self')
-                                                ? 'SelfReporting'
-                                                : 'Other-Report',
-                                            style: TextStyle(
-                                                color: Colors.grey.shade200,
-                                                fontSize: 12,
-                                                shadows: const [
-                                                  Shadow(
-                                                      color: Colors.white,
-                                                      offset: Offset(0, 0.5)),
-                                                  Shadow(
-                                                      color: Colors.grey,
-                                                      offset: Offset(0.1, 0.6)),
-                                                ])),
-                                      ),
-                                    ),
+                                                : Colors.green.shade300,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          )),
+                                    ]),
                                   ),
                                 ]),
                                 onTap: () {

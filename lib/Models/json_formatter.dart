@@ -216,17 +216,8 @@ class Values {
   final int id;
   final int? read;
   final int? unread;
-  final int? oRead;
-  final int? oUnread;
-  final int? total;
 
-  Values(
-      {this.total,
-      this.oRead,
-      this.oUnread,
-      required this.id,
-      this.read,
-      this.unread});
+  Values({required this.id, this.read, this.unread});
 
   Map<String, dynamic> toMap() {
     return {
@@ -234,20 +225,18 @@ class Values {
       'id': id,
       'read': read,
       'unread': unread,
-      'oRead': oRead,
-      'oUnread': oUnread,
-      'total': total,
     };
   }
 
   @override
   String toString() {
-    return 'Values{id : $id, read: $read, unread: $unread, oRead: $oRead, oUnread: $oUnread, total: $total }';
+    return 'Values{id : $id, read: $read, unread: $unread}';
   }
 }
 
 class GeneralData {
   final int? id;
+  final String? isRead;
   final String? surname;
   final String? others;
   final String? address;
@@ -270,7 +259,8 @@ class GeneralData {
   final String type;
 
   GeneralData(
-      {this.id,
+      {required this.isRead,
+      this.id,
       this.surname,
       required this.type,
       this.others,
@@ -295,6 +285,7 @@ class GeneralData {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'isRead': isRead,
       'type': type,
       'surname': surname,
       'others': others,
@@ -308,7 +299,7 @@ class GeneralData {
       'healthIssue': healthIssue,
       'commet': commet,
       'sex': sex,
-      'pcommet': pCommet,
+      'pCommet': pCommet,
       'pSpecifyIllness': pSpecifyIllness,
       'rRelation': rRelation,
       'pAddress': pAddress,
@@ -320,6 +311,6 @@ class GeneralData {
 
   @override
   String toString() {
-    return 'GeneralData{ id : $id, surname : $surname, , type : $type, healthIssue : $healthIssue, others : $others, address : $address, age : $age, number : $number, city : $city, state : $state, illnessHistory : $illnessHistory,haveIdea : $haveIdea, commet : $commet, otherSymptoms : $otherSymptoms, sex : $sex,  symptoms : $symptoms, pcommet: $pCommet, pSpecifyIllness: $pSpecifyIllness, rRelation: $rRelation, pAddress: $pAddress, pFullName: $pFullName}';
+    return 'GeneralData{ id : $id, surname : $surname, isRead : $isRead, type : $type, healthIssue : $healthIssue, others : $others, address : $address, age : $age, number : $number, city : $city, state : $state, illnessHistory : $illnessHistory,haveIdea : $haveIdea, commet : $commet, otherSymptoms : $otherSymptoms, sex : $sex,  symptoms : $symptoms, pcommet: $pCommet, pSpecifyIllness: $pSpecifyIllness, rRelation: $rRelation, pAddress: $pAddress, pFullName: $pFullName}';
   }
 }

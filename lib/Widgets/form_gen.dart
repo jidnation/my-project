@@ -198,9 +198,10 @@ class SymptomsWidget extends StatefulWidget {
   @override
   State<SymptomsWidget> createState() => _SymptomsWidgetState();
 
-  static TextEditingController otherSymptomsController =  TextEditingController();
+  static TextEditingController otherSymptomsController =
+      TextEditingController();
 
-   static bool feverVal = false;
+  static bool feverVal = false;
   static bool soreVal = false;
   static bool coughVal = false;
   static bool noseVal = false;
@@ -210,15 +211,6 @@ class SymptomsWidget extends StatefulWidget {
 }
 
 class _SymptomsWidgetState extends State<SymptomsWidget> {
-
-  // String feverValStorage = '';
-  // String soreValStorage = '';
-  // String coughValStorage = '';
-  // String noseValStorage = '';
-  // String breathValStorage = '';
-  // String eyeValStorage = '';
-  // String spotValStorage = '';
-
   @override
   // void dispose() {
   //   SymptomsWidget.otherSymptomsController.dispose();
@@ -227,7 +219,6 @@ class _SymptomsWidgetState extends State<SymptomsWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SymptomsCheckBox(
         valueName: SymptomsWidget.feverVal,

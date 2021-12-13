@@ -145,13 +145,15 @@ class _SignInPageState extends State<SignInPage> {
                                               arguments: userNameController
                                                   .text) as Future?;
                                     } else {
-                                      if (i == 0) {
+                                      if (i <= 0) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(snackBar);
                                       }
                                       i++;
                                       continue;
                                     }
+                                  ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackBar);
                                   }
                                 }
                               },

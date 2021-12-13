@@ -41,7 +41,7 @@ class AdminSuccessPage extends StatelessWidget {
                               size: 120,
                             ),
                             Text(
-                              'SUCESSFUL',
+                              'SUCCESSFUL',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'Courgette',
@@ -60,7 +60,7 @@ class AdminSuccessPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Text(
-                          'Your Account has been sucessfully created\nYou can now login. press LOGIN to continue',
+                          'Your Account has been successfully created\nYou can now login. press LOGIN to continue',
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             fontSize: 13.5,

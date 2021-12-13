@@ -311,3 +311,25 @@ class FileManager {
     // return results.users;
   }
 }
+
+
+SizedBox(
+                              width: 130,
+                              child: Form(
+                                  key: _officerCommentKey,
+                                  child: TextFormField(
+                                    maxLines: 2,
+                                    scrollPadding: const EdgeInsets.all(0),
+                                    decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.grey.shade400)),
+                                        contentPadding: const EdgeInsets.only(
+                                            top: 10, left: 10, bottom: 10),
+                                        isDense: true,
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                          width: 1.5,
+                                          color: Colors.grey.shade500,
+                                        ))),
+                                  ))),
