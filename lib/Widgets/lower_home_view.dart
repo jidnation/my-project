@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_project/Routes/contacts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:my_project/Routes/contacts.dart';
 
 class LowerPart extends StatelessWidget {
   const LowerPart({
@@ -12,19 +12,19 @@ class LowerPart extends StatelessWidget {
     return Stack(children: [
       Container(
         height: MediaQuery.of(context).size.height * 0.35,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           backgroundBlendMode: BlendMode.luminosity,
-          color: Colors.orange.shade300.withOpacity(0.4),
-          gradient: const RadialGradient(
-            radius: 1,
-            colors: [
-              Color(0xff5a189a),
-              Color(0xff7b2cbf),
-              Color(0xff9d4edd),
-              Color(0xffc77dff),
-              Color(0xffe0aaff),
-            ],
-          ),
+          color: Colors.white,
+          // gradient: const RadialGradient(
+          //   radius: 1,
+          //   colors: [
+          //     Color(0xff5a189a),
+          //     Color(0xff7b2cbf),
+          //     Color(0xff9d4edd),
+          //     Color(0xffc77dff),
+          //     Color(0xffe0aaff),
+          //   ],
+          // ),
         ),
       ),
       Positioned(
@@ -32,52 +32,54 @@ class LowerPart extends StatelessWidget {
         left: MediaQuery.of(context).size.width * 0.28,
         child: Container(
           height: 40,
-          width: MediaQuery.of(context).size.width * 0.45,
+          width: MediaQuery.of(context).size.width * 0.5,
           decoration: BoxDecoration(
-            color: const Color(0xff3c096c),
-            borderRadius: BorderRadius.circular(20),
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(10),
             border: Border.all(
-              color: const Color(0xff240046).withOpacity(0.2),
-              width: 0.2,
+              color: Colors.grey.shade700,
+              width: 2,
             ),
-            boxShadow: [
-              BoxShadow(
-                spreadRadius: 0.2,
-                color: const Color(0xff9d4edd).withOpacity(0.3),
-                blurRadius: 2,
-                offset: const Offset(0.5, 0.5),
-              ),
-            ],
+            // boxShadow: [
+            //   BoxShadow(
+            //     spreadRadius: 0.2,
+            //     color: const Color(0xff9d4edd).withOpacity(0.3),
+            //     blurRadius: 2,
+            //     offset: const Offset(0.5, 0.5),
+            //   ),
+            // ],
           ),
           child: TextButton.icon(
             style: TextButton.styleFrom(
                 // elevation: 1
                 ),
-            icon: const FaIcon(
+            icon: FaIcon(
               FontAwesomeIcons.exclamationTriangle,
-              color: Color(0xffe0aaff),
+              color: Colors.grey.shade800,
               size: 15,
             ),
-            label: const Text(
+            label: Text(
               'Report Incident',
               style: TextStyle(
                   fontFamily: 'Courgette',
                   // letterSpacing: 1,
-                  color: Color(0xffe0aaff),
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
+                  color: Colors.grey.shade800,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 1.2,
                   shadows: [
                     Shadow(
                       blurRadius: 0.4,
-                      color: Color(0xffc77dff),
-                      offset: Offset(0.2, 0.2),
+                      color: Colors.grey.shade800,
+                      offset: const Offset(0.2, 0.2),
                     )
                   ]),
             ),
             onPressed: () {
               Navigator.pushNamed(
-                context, reportingPage,
-               );
+                context,
+                reportingPage,
+              );
             },
           ),
         ),
@@ -87,20 +89,23 @@ class LowerPart extends StatelessWidget {
         left: MediaQuery.of(context).size.width * 0.30,
         child: TextButton.icon(
           onPressed: () {
-                Navigator.pushNamed(
+            Navigator.pushNamed(
               context,
               signInPage,
             );
           },
-          icon: const Icon(
+          icon: Icon(
             Icons.door_front_door,
             size: 22,
+            color: Colors.grey.shade800,
           ),
-          label: const Text(
+          label: Text(
             'Sign In/Sign Up',
             style: TextStyle(
               fontFamily: 'Dancing',
+              color: Colors.grey.shade800,
               fontSize: 16,
+              letterSpacing: 1.3,
               fontWeight: FontWeight.bold,
             ),
           ),

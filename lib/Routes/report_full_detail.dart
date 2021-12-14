@@ -462,10 +462,9 @@ class _OReportFullDetailsState extends State<OReportFullDetails> {
                                                 : Colors.white,
                                             fontWeight: FontWeight.w400,
                                           )))),
-                              onTap: () async {
-                                // await valueChanger(data);//TODO work on this
-                              }
-                              ),
+                              onTap: () {
+                                valueChanger(data); //TODO work on this
+                              }),
                           const SizedBox(height: 30),
                           const Text('Officers Comment',
                               style: TextStyle(
@@ -545,9 +544,8 @@ class _OReportFullDetailsState extends State<OReportFullDetails> {
     late String status;
     await _generaldata.generalTableGen();
     if (await _generaldata
-            .generalReport()
-            .then((value) => value[container.id - 1].isRead) ==
-        'unread') {
+        .generalReport()
+        .then((value) => value[container.id - 1].isRead == 'unread')) {
       await _generaldata.insertGeneral(GeneralData(
         isRead: 'read',
         type: container.type,

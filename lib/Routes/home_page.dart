@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: const Color(0xffe0aaff),
+        backgroundColor: Colors.white,
         body: ListView(
           children: const [
             // Text(context.select<FileController, String>((controller) => controller.user.userName)),

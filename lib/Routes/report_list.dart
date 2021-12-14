@@ -51,17 +51,6 @@ class Fetchers {
 }
 
 class _ReportListPageState extends State<ReportListPage> {
-  // DATABASE CALLER
-  // Future<List<SelfReport>> settings() async {
-  //   var values;
-  //
-  //   // await _data.getter();
-  //   await _selfDatabase.selfReportTableGen();
-  //   values = await _selfDatabase.selfReport();
-  //
-  //   return values;
-  // }
-
   @override
   void initState() {
     super.initState();

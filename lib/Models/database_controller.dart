@@ -294,7 +294,7 @@ class SelfDatabase extends StatefulWidget {
     );
 
     var data2 = sReport.toMap();
-
+    await _reporting.valueSetter();
     await _general.generalTableGen();
     await _general.insertGeneral(GeneralData(
       type: 'self',
@@ -409,6 +409,7 @@ class OtherDatabase extends StatefulWidget {
     );
 
     var data2 = oReport.toMap();
+    await _reporting.valueSetter();
     await _general.generalTableGen();
     await _general.insertGeneral(GeneralData(
       type: 'others',
@@ -532,8 +533,6 @@ class GeneralDB extends StatefulWidget {
   Future<void> insertGeneral(GeneralData gReport) async {
     //creating reference to the database
     final db = await generalDB;
-
-    await _reporting.valueSetter();
 
     await db.insert(
       'generalReports',
